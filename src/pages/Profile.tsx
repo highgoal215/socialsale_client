@@ -4,11 +4,12 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { User, CreditCard, History, Settings, Wallet, Bitcoin, LogOut, LayoutDashboard, Bell } from 'lucide-react';
+import { User, CreditCard, History, Settings, Wallet, Bitcoin, LogOut, LayoutDashboard, Bell, Loader2 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import ChangePasswordModal from '@/components/ChangePasswordModal';
 import NotificationTest from '@/components/NotificationTest';
+import { fetchUserOrders, getServiceDisplayName, getStatusDisplayName, getStatusColorClass, UserOrder } from '@/services/order-service';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -22,6 +23,9 @@ const Profile = () => {
 
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
+  const [orders, setOrders] = useState<UserOrder[]>([]);
+  const [isLoadingOrders, setIsLoadingOrders] = useState(false);
+  const [ordersError, setOrdersError] = useState<string | null>(null);
 
   // Initialize firstName and lastName when user data is available
   useEffect(() => {
@@ -31,6 +35,43 @@ const Profile = () => {
       setLastName(nameParts.slice(1).join(' ') || '');
     }
   }, [user]);
+
+  // Fetch user orders when overview or history tab is active
+  useEffect(() => {
+    if (activeTab === 'history' || activeTab === 'overview') {
+      fetchOrders();
+    }
+  }, [activeTab, toast]);
+
+  const fetchOrders = async () => {
+    setIsLoadingOrders(true);
+    setOrdersError(null);
+    
+    try {
+      const response = await fetchUserOrders();
+      
+      if (response.success) {
+        setOrders(response.data);
+      } else {
+        setOrdersError(response.message || 'Failed to load orders');
+        toast({
+          title: "Error",
+          description: response.message || 'Failed to load orders',
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+      setOrdersError('An error occurred while loading orders');
+      toast({
+        title: "Error",
+        description: 'An error occurred while loading orders',
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoadingOrders(false);
+    }
+  };
 
   const handleLogout = () => {
     logout();
@@ -49,11 +90,10 @@ const Profile = () => {
     { id: 'notifications', label: 'Notifications', icon: Bell },
   ];
 
-  const orderHistory = [
-    { id: '1001', service: '1,000 Instagram Followers', amount: 17.99, status: 'Completed', date: '2024-12-15' },
-    { id: '1002', service: '500 Instagram Likes', amount: 5.99, status: 'In Progress', date: '2024-12-14' },
-    { id: '1003', service: '2,500 TikTok Views', amount: 12.99, status: 'Completed', date: '2024-12-12' },
-  ];
+  // Calculate order statistics for overview
+  const totalOrders = orders.length;
+  const completedOrders = orders.filter(order => order.status === 'completed').length;
+  const totalSpent = orders.reduce((sum, order) => sum + order.price, 0);
 
   const getInitials = (name: string) => {
     if (!name || typeof name !== 'string') {
@@ -201,12 +241,12 @@ const Profile = () => {
                         <div className="text-green-700 dark:text-green-300">Account Balance</div>
                       </div>
                       <div className="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                        <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-1">12</div>
+                        <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-1">{totalOrders}</div>
                         <div className="text-blue-700 dark:text-blue-300">Total Orders</div>
                       </div>
                       <div className="text-center p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
-                        <div className="text-2xl font-bold text-purple-600 dark:text-purple-400 mb-1">8.5K</div>
-                        <div className="text-purple-700 dark:text-purple-300">Followers Gained</div>
+                        <div className="text-2xl font-bold text-purple-600 dark:text-purple-400 mb-1">${totalSpent.toFixed(2)}</div>
+                        <div className="text-purple-700 dark:text-purple-300">Total Spent</div>
                       </div>
                     </div>
 
@@ -214,14 +254,21 @@ const Profile = () => {
                       <div>
                         <h3 className="font-semibold mb-3 text-gray-900 dark:text-white">Recent Activity</h3>
                         <div className="space-y-3">
-                          <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                            <span className="text-sm text-gray-900 dark:text-white">Instagram Followers Order</span>
-                            <span className="text-sm text-green-600 dark:text-green-400">Completed</span>
-                          </div>
-                          <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                            <span className="text-sm text-gray-900 dark:text-white">Balance Deposit</span>
-                            <span className="text-sm text-blue-600 dark:text-blue-400">+$50.00</span>
-                          </div>
+                          {orders.slice(0, 3).map((order) => (
+                            <div key={order._id} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                              <span className="text-sm text-gray-900 dark:text-white">
+                                {getServiceDisplayName(order.serviceType, order.quality)} - {order.quantity.toLocaleString()}
+                              </span>
+                              <span className={`text-sm ${getStatusColorClass(order.status)}`}>
+                                {getStatusDisplayName(order.status)}
+                              </span>
+                            </div>
+                          ))}
+                          {orders.length === 0 && (
+                            <div className="text-center py-4 text-gray-500 dark:text-gray-400">
+                              <p className="text-sm">No recent activity</p>
+                            </div>
+                          )}
                         </div>
                       </div>
 
@@ -348,39 +395,84 @@ const Profile = () => {
               {/* Order History Tab */}
               {activeTab === 'history' && (
                 <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm">
-                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Order History</h2>
-
-                  <div className="overflow-x-auto">
-                    <table className="w-full">
-                      <thead className="bg-gray-50">
-                        <tr>
-                          <th className="px-4 py-3 text-left text-sm font-medium text-gray-700">Order ID</th>
-                          <th className="px-4 py-3 text-left text-sm font-medium text-gray-700">Service</th>
-                          <th className="px-4 py-3 text-left text-sm font-medium text-gray-700">Amount</th>
-                          <th className="px-4 py-3 text-left text-sm font-medium text-gray-700">Status</th>
-                          <th className="px-4 py-3 text-left text-sm font-medium text-gray-700">Date</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-gray-200">
-                        {orderHistory.map((order) => (
-                          <tr key={order.id}>
-                            <td className="px-4 py-3 text-sm font-medium">#{order.id}</td>
-                            <td className="px-4 py-3 text-sm">{order.service}</td>
-                            <td className="px-4 py-3 text-sm">${order.amount}</td>
-                            <td className="px-4 py-3">
-                              <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${order.status === 'Completed'
-                                ? 'bg-green-100 text-green-800'
-                                : 'bg-yellow-100 text-yellow-800'
-                                }`}>
-                                {order.status}
-                              </span>
-                            </td>
-                            <td className="px-4 py-3 text-sm">{order.date}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                  <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Order History</h2>
+                    <Button 
+                      onClick={fetchOrders} 
+                      variant="outline" 
+                      size="sm"
+                      disabled={isLoadingOrders}
+                    >
+                      {isLoadingOrders ? (
+                        <>
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                          Refreshing...
+                        </>
+                      ) : (
+                        'Refresh'
+                      )}
+                    </Button>
                   </div>
+
+                  {isLoadingOrders ? (
+                    <div className="flex justify-center items-center h-64">
+                      <Loader2 className="h-8 w-8 animate-spin text-purple-600" />
+                      <span className="ml-2 text-lg text-gray-600 dark:text-gray-300">Loading orders...</span>
+                    </div>
+                  ) : ordersError ? (
+                    <div className="text-center py-8">
+                      <p className="text-red-600 dark:text-red-400 mb-4">{ordersError}</p>
+                      <Button onClick={fetchOrders} variant="outline">
+                        Try Again
+                      </Button>
+                    </div>
+                  ) : orders.length === 0 ? (
+                    <div className="text-center py-8">
+                      <p className="text-gray-600 dark:text-gray-300 mb-4">No orders found</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Your order history will appear here once you place orders.</p>
+                    </div>
+                  ) : (
+                    <div className="overflow-x-auto">
+                      <table className="w-full">
+                        <thead className="bg-gray-50 dark:bg-gray-700">
+                          <tr>
+                            <th className="px-4 py-3 text-left text-sm font-medium text-gray-700 dark:text-gray-300">Order Number</th>
+                            <th className="px-4 py-3 text-left text-sm font-medium text-gray-700 dark:text-gray-300">Service</th>
+                            <th className="px-4 py-3 text-left text-sm font-medium text-gray-700 dark:text-gray-300">Quality</th>
+                            <th className="px-4 py-3 text-left text-sm font-medium text-gray-700 dark:text-gray-300">Price</th>
+                            <th className="px-4 py-3 text-left text-sm font-medium text-gray-700 dark:text-gray-300">Status</th>
+                            <th className="px-4 py-3 text-left text-sm font-medium text-gray-700 dark:text-gray-300">Date</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-200 dark:divide-gray-600">
+                          {orders.map((order) => (
+                            <tr key={order._id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                              <td className="px-4 py-3 text-sm font-medium text-gray-900 dark:text-white">
+                                {order.orderNumber || `#${order._id.slice(-8)}`}
+                              </td>
+                              <td className="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                                {getServiceDisplayName(order.serviceType, order.quality)} - {order.quantity.toLocaleString()}
+                              </td>
+                              <td className="px-4 py-3 text-sm text-gray-900 dark:text-white capitalize">
+                                {order.quality}
+                              </td>
+                              <td className="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                                ${order.price.toFixed(2)}
+                              </td>
+                              <td className="px-4 py-3">
+                                <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${getStatusColorClass(order.status)}`}>
+                                  {getStatusDisplayName(order.status)}
+                                </span>
+                              </td>
+                              <td className="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                                {new Date(order.createdAt).toLocaleDateString()}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
                 </div>
               )}
 
