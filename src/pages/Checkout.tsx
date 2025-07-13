@@ -51,10 +51,9 @@ const Checkout = () => {
       return;
     }
     
-    // Check if postUrl is required for this service type (not needed for Followers)
-    const requiresPostUrl = !service.includes('Followers');
-    if (requiresPostUrl && !formData.postUrl) {
-      alert('Post/Video URL is required for this service type.');
+    // Check if postUrl is required for all service types
+    if (!formData.postUrl) {
+      alert('Post/Video URL is required for all service types.');
       return;
     }
     
@@ -87,6 +86,8 @@ const Checkout = () => {
         return serviceMap[serviceName] || 'followers';
       };
 
+
+      
       // Parse quantity from package amount (e.g., "5K" -> 5000)
       const parseQuantity = (packageAmount: string): number => {
         const num = packageAmount.replace(/[^\d.]/g, '');
@@ -106,10 +107,7 @@ const Checkout = () => {
         serviceType: mapServiceType(service),
         quality: 'general' as 'general' | 'premium', // Default to general, can be enhanced later
         quantity: parseQuantity(packageAmount),
-        // Only include postUrl for non-follower services
-        ...(mapServiceType(service) !== 'followers' && {
-          postUrl: formData.postUrl
-        }),
+        postUrl: formData.postUrl,
         // Card payment details
         ...(paymentMethod === 'card' && {
           cardNumber: formData.cardNumber,
@@ -249,26 +247,24 @@ const Checkout = () => {
                         required
                       />
                     </div>
-                    {/* Post/Video URL field - Required for Likes, Views, Comments; Not needed for Followers */}
-                    {!service.includes('Followers') && (
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                          Post/Video URL (Required)
-                        </label>
-                        <Input 
-                          name="postUrl"
-                          placeholder="https://instagram.com/p/your-post-id"
-                          value={formData.postUrl}
-                          onChange={handleInputChange}
-                          required
-                        />
-                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                          {service.includes('Instagram') && 'Enter the URL of your Instagram post'}
-                          {service.includes('TikTok') && 'Enter the URL of your TikTok video'}
-                          {service.includes('YouTube') && 'Enter the URL of your YouTube video'}
-                        </p>
-                      </div>
-                    )}
+                    {/* Post/Video URL field - Required for all services */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Post/Video URL (Required)
+                      </label>
+                      <Input 
+                        name="postUrl"
+                        placeholder="https://instagram.com/p/your-post-id"
+                        value={formData.postUrl}
+                        onChange={handleInputChange}
+                        required
+                      />
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                        {service.includes('Instagram') && 'Enter the URL of your Instagram post'}
+                        {service.includes('TikTok') && 'Enter the URL of your TikTok video'}
+                        {service.includes('YouTube') && 'Enter the URL of your YouTube video'}
+                      </p>
+                    </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Email Address
