@@ -86,6 +86,8 @@ const Checkout = () => {
         return serviceMap[serviceName] || 'followers';
       };
 
+
+      
       // Parse quantity from package amount (e.g., "5K" -> 5000)
       const parseQuantity = (packageAmount: string): number => {
         const num = packageAmount.replace(/[^\d.]/g, '');
