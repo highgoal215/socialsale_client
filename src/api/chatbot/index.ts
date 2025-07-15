@@ -17,7 +17,7 @@ export interface ChatResponse {
 }
 
 // Base API configuration
-const API_BASE_URL = import.meta.env.BACKEND_URL || 'http://localhost:5005/api';
+const API_BASE_URL = import.meta.env.BACKEND_URL || 'https://likes.io/api';
 
 // Send message to chatbot
 export const sendMessage = async (
