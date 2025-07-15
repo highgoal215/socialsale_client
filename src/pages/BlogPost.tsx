@@ -65,7 +65,7 @@ const BlogPost = () => {
           url: window.location.href,
         });
       } catch (error) {
-        console.log('Error sharing:', error);
+        // console.log('Error sharing:', error);
       }
     } else {
       // Fallback: copy URL to clipboard
@@ -73,7 +73,7 @@ const BlogPost = () => {
         await navigator.clipboard.writeText(window.location.href);
         alert('Link copied to clipboard!');
       } catch (error) {
-        console.log('Error copying to clipboard:', error);
+        // console.log('Error copying to clipboard:', error);
       }
     }
   };

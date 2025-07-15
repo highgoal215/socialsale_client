@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const Backend_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5005/api/client';
+// const Backend_URL = import.meta.env.VITE_BACKEND_URL || 'https://likes.io/api/client';
+const Backend_URL = import.meta.env.VITE_BACKEND_URL || 'https://likes.io/api';
 
 // Notification preferences interface
 interface NotificationPreferences {
@@ -63,7 +64,7 @@ export const GetNotificationPreferences = async (): Promise<GetPreferencesRespon
       withCredentials: true,
     });
     
-    console.log("Notification preferences retrieved successfully:", response.data);
+    // console.log("Notification preferences retrieved successfully:", response.data);
     return response.data;
   } catch (error: any) {
     console.error("Get Notification Preferences Error:", error);
@@ -113,7 +114,7 @@ export const UpdateNotificationPreferences = async (preferences: Partial<Notific
       withCredentials: true,
     });
     
-    console.log("Notification preferences updated successfully:", response.data);
+    // console.log("Notification preferences updated successfully:", response.data);
     return response.data;
   } catch (error: any) {
     console.error("Update Notification Preferences Error:", error);

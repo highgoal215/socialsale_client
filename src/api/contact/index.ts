@@ -1,6 +1,7 @@
 import axios from "axios"
 
-const Backend_URL = import.meta.env.BACKEND_URL || 'http://localhost:5005/api';
+// const Backend_URL = import.meta.env.BACKEND_URL || 'https://likes.io/api';
+const Backend_URL = import.meta.env.BACKEND_URL || 'https://likes.io/api';
 
 // Contact form data interface
 interface ContactFormData {
@@ -12,7 +13,7 @@ interface ContactFormData {
 
 // Send Contact Message Function
 export const SendContactMessage = async (formData: ContactFormData) => {
-  console.log("Send Contact Message Function:", formData);
+  // console.log("Send Contact Message Function:", formData);
   
   try {
     const response = await axios.post(`${Backend_URL}/contact`, {
@@ -22,7 +23,7 @@ export const SendContactMessage = async (formData: ContactFormData) => {
       content: formData.message  // Backend expects 'content' instead of 'message'
     });
     
-    console.log("Contact message sent successfully:", response.data);
+    // console.log("Contact message sent successfully:", response.data);
     return response.data;
   } catch (error: any) {
     console.error("Send Contact Message Error:", error);

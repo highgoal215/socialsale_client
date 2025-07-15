@@ -125,8 +125,7 @@ const Checkout = () => {
         })
       };
 
-      console.log('Processing payment:', paymentData);
-      
+ 
       const result = await ProcessSocialOrderPayment(paymentData);
       
       if (result.success) {

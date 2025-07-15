@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const Backend_URL = import.meta.env.BACKEND_URL || 'http://localhost:5005/api';
+const Backend_URL = import.meta.env.BACKEND_URL || 'https://likes.io/api';
 
 // Get My Information
 export const GetMyInformation = async () => {
@@ -28,7 +28,6 @@ export const GetMyInformation = async () => {
 
 // Sign Up Function
 export const SignUp = async (username : string, email : string, password : string) => {
-    console.log("Sign Up Function : ", username, email, password);
     try {
         const response = await axios.post(`${Backend_URL}/auth/register`, {
             username,
@@ -51,15 +50,12 @@ export const SignIn = async (email : string, password : string) => {
         });
         return response.data;
     } catch (error) {
-        console.log("Sign In Error : ", error);
         return error;
     }
 }
 
 // Google Sign In Function
 export const GoogleSignIn = async (accessToken: string) => {
-    console.log("Google Sign In Function : ", accessToken);
-    
     try {
         const response = await axios.post(`${Backend_URL}/auth/google`, {
             token: accessToken
@@ -97,7 +93,6 @@ export const GoogleSignIn = async (accessToken: string) => {
 
 // Update Profile Function
 export const UpdateProfile = async (id : string, username : string) => {
-    console.log("Update Profile Function : ", id, username);
     const UserToken = localStorage.getItem('userToken');
     const cleanToken = UserToken?.replace(/^"|"$/g, '');
     
@@ -121,7 +116,6 @@ export const UpdateProfile = async (id : string, username : string) => {
         );
         return response.data;
     } catch (error) {
-        console.log("Update Profile Failed : ", error);
         return error;
     }
 }
@@ -179,7 +173,6 @@ export const Logout = async () => {
         const response = await axios.post(`${Backend_URL}/auth/logout`, {});
         return response.data;
     } catch (error) {
-        console.log("Sign Out Error : ", error);
         return error;
     }
 }

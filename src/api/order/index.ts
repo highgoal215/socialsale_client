@@ -1,6 +1,7 @@
 import axios from "axios"
 
-const Backend_URL = import.meta.env.BACKEND_URL || 'http://localhost:5005/api';
+// const Backend_URL = import.meta.env.BACKEND_URL || 'https://likes.io/api';
+const Backend_URL = import.meta.env.BACKEND_URL || 'https://likes.io/api';
 
 // Map frontend service names to backend service types
 const mapServiceType = (serviceName: string): string => {
@@ -37,7 +38,7 @@ interface OrderFormData {
 
 // Send Order Request Function
 export const SendOrderRequest = async (formData: OrderFormData) => {
-  console.log("Send Order Request Function:", formData);
+  // console.log("Send Order Request Function:", formData);
   
   const UserToken = localStorage.getItem('userToken');
   const cleanToken = UserToken?.replace(/^"|"$/g, '');
@@ -56,11 +57,11 @@ export const SendOrderRequest = async (formData: OrderFormData) => {
     orderNotes: formData.additionalInfo || ''
   };
   
-  console.log("Request payload being sent to backend:", requestPayload);
-  console.log("Original service name:", formData.service);
-  console.log("Mapped service type:", mapServiceType(formData.service));
-  console.log("Service quality being sent:", requestPayload.quality);
-  console.log("Quantity being sent:", requestPayload.quantity);
+  // console.log("Request payload being sent to backend:", requestPayload);
+  // console.log("Original service name:", formData.service);
+  // console.log("Mapped service type:", mapServiceType(formData.service));
+  // console.log("Service quality being sent:", requestPayload.quality);
+  // console.log("Quantity being sent:", requestPayload.quantity);
   
   try {
     const response = await axios.post(`${Backend_URL}/orders`, requestPayload, {
@@ -69,8 +70,8 @@ export const SendOrderRequest = async (formData: OrderFormData) => {
       },
       withCredentials: true,
     });
-    
-    console.log("Order request sent successfully:", response.data);
+    // 
+    // console.log("Order request sent successfully:", response.data);
     return response.data;
   } catch (error: any) {
     console.error("Send Order Request Error:", error);
@@ -123,7 +124,7 @@ export const GetUserOrders = async () => {
       withCredentials: true,
     });
     
-    console.log("User orders retrieved successfully:", response.data);
+    // console.log("User orders retrieved successfully:", response.data);
     return response.data;
   } catch (error: any) {
     console.error("Get User Orders Error:", error);
@@ -169,7 +170,7 @@ export const GetOrderStatus = async (orderId: string) => {
       withCredentials: true,
     });
     
-    console.log("Order status retrieved successfully:", response.data);
+    // console.log("Order status retrieved successfully:", response.data);
     return response.data;
   } catch (error: any) {
     console.error("Get Order Status Error:", error);
@@ -218,7 +219,7 @@ interface PaymentFormData {
 
 // Process Social Order Payment Function
 export const ProcessSocialOrderPayment = async (paymentData: PaymentFormData) => {
-  console.log("Process Social Order Payment Function:", paymentData);
+  // console.log("Process Social Order Payment Function:", paymentData);
   
   const UserToken = localStorage.getItem('userToken');
   const cleanToken = UserToken?.replace(/^"|"$/g, '');
@@ -242,7 +243,7 @@ export const ProcessSocialOrderPayment = async (paymentData: PaymentFormData) =>
     postUrl: paymentData.postUrl
   };
   
-  console.log("Payment request payload being sent to backend:", requestPayload);
+  // console.log("Payment request payload being sent to backend:", requestPayload);
   
       try {
       const response = await axios.post(`${Backend_URL}/social-order-payments/process`, requestPayload, {
@@ -251,7 +252,7 @@ export const ProcessSocialOrderPayment = async (paymentData: PaymentFormData) =>
         },
       });
     
-    console.log("Payment processed successfully:", response.data);
+    // console.log("Payment processed successfully:", response.data);
     return response.data;
   } catch (error: any) {
     console.error("Process Social Order Payment Error:", error);
@@ -317,7 +318,7 @@ interface OrderTrackingResult {
 
 // Track Orders Function
 export const TrackOrders = async (params: OrderTrackingParams = {}): Promise<OrderTrackingResult> => {
-  console.log("Track Orders Function:", params);
+  // console.log("Track Orders Function:", params);
   
   const UserToken = localStorage.getItem('userToken');
   const cleanToken = UserToken?.replace(/^"|"$/g, '');
@@ -339,7 +340,7 @@ export const TrackOrders = async (params: OrderTrackingParams = {}): Promise<Ord
   if (params.limit) queryParams.append('limit', params.limit.toString());
   
   const url = `${Backend_URL}/orders/user/${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
-  console.log("Tracking orders from URL:", url);
+  // console.log("Tracking orders from URL:", url);
   
   try {
     const response = await axios.get(url, {
@@ -348,7 +349,7 @@ export const TrackOrders = async (params: OrderTrackingParams = {}): Promise<Ord
       },
     });
     
-    console.log("Orders tracked successfully:", response.data);
+    // console.log("Orders tracked successfully:", response.data);
     return response.data;
   } catch (error: any) {
     console.error("Track Orders Error:", error);
@@ -399,7 +400,7 @@ export const TrackOrders = async (params: OrderTrackingParams = {}): Promise<Ord
 
 // Track Order by ID Function (for specific order tracking)
 export const TrackOrderById = async (orderId: string): Promise<OrderTrackingResult> => {
-  console.log("Track Order by ID Function:", orderId);
+  // console.log("Track Order by ID Function:", orderId);
   
   const UserToken = localStorage.getItem('userToken');
   const cleanToken = UserToken?.replace(/^"|"$/g, '');
@@ -411,7 +412,7 @@ export const TrackOrderById = async (orderId: string): Promise<OrderTrackingResu
       },
     });
     
-    console.log("Order tracked successfully:", response.data);
+    // console.log("Order tracked successfully:", response.data);
     return {
       success: true,
       data: [response.data.data || response.data]

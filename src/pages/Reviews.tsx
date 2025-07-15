@@ -27,8 +27,6 @@ const Reviews = () => {
         setLoading(true);
         const response = await GetAllReviews();
         
-        console.log("API Response:", response);
-        
         if (response.success === false) {
           setError(response.message || 'Failed to fetch reviews');
         } else {

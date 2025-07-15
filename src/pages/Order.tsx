@@ -53,8 +53,6 @@ const Order = () => {
       return;
     }
     
-    // Handle order submission
-    console.log('Order submitted:', { service, package: package_param, price, ...formData });
     alert('Order submitted successfully! You will receive a confirmation email shortly.');
   };
 

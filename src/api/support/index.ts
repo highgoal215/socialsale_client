@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const Backend_URL = import.meta.env.BACKEND_URL || 'http://localhost:5005/api';
+const Backend_URL = import.meta.env.BACKEND_URL || 'https://likes.io/api';
 
 interface SupportFormData {
     username: string;
@@ -12,7 +12,7 @@ interface SupportFormData {
 }
 
 export const SendSupportMessage = async (formData: SupportFormData) => {
-    console.log("Send Support Message Function:", formData);
+    // console.log("Send Support Message Function:", formData);
     try{
         const response = await axios.post(`${Backend_URL}/support`, {
             username: formData.username,
@@ -22,7 +22,7 @@ export const SendSupportMessage = async (formData: SupportFormData) => {
             subject: formData.subject,
             content: formData.message
         });
-        console.log("Support message sent successfully:", response.data);
+        // console.log("Support message sent successfully:", response.data);
         return response.data;
     } catch(error: any){
         console.error("Send Support Message Error:", error);
