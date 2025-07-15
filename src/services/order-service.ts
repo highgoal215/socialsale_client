@@ -3,7 +3,7 @@ import { GetUserOrders } from '@/api/order';
 export interface UserOrder {
   _id: string;
   orderNumber: string;
-  serviceType: 'followers' | 'likes' | 'views' | 'comments';
+  serviceType: 'followers' | 'subscribers' | 'likes' | 'views' | 'comments';
   quality: 'general' | 'premium';
   quantity: number;
   price: number;
@@ -63,12 +63,14 @@ export const fetchUserOrders = async (): Promise<OrdersResponse> => {
 };
 
 // Helper function to get service display name
-export const getServiceDisplayName = (serviceType: string, quality: string): string => {
+export const getServiceDisplayName = (serviceType: string, quality: string, category?: string): string => {
   const qualityText = quality === 'premium' ? 'Premium' : 'General';
   
   switch (serviceType) {
     case 'followers':
       return `${qualityText} Followers`;
+    case 'subscribers':
+      return `${qualityText} Subscribers`;
     case 'likes':
       return `${qualityText} Likes`;
     case 'views':

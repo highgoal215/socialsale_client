@@ -79,7 +79,7 @@ const Navbar = () => {
       id: 'youtube',
       name: 'YouTube Services',
       services: [
-        { name: 'YouTube Followers', path: '/youtube/followers' },
+        { name: 'YouTube Subscribers', path: '/youtube/subscribers' },
         { name: 'YouTube Likes', path: '/youtube/likes' },
         { name: 'YouTube Views', path: '/youtube/views' },
         { name: 'YouTube Comments', path: '/youtube/comments' },

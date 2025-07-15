@@ -52,29 +52,7 @@ const Index = () => {
     }
   ];
 
-  const mainTestimonials = [
-    {
-      name: "Sarah Johnson",
-      role: "Lifestyle Influencer",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b829?w=150&h=150&fit=crop&crop=face",
-      rating: 5,
-      text: "Likes.IO completely transformed my Instagram presence! I went from 500 to 10K followers in just 2 months. The engagement is real and my content is reaching so many more people now."
-    },
-    {
-      name: "Mike Chen",
-      role: "Content Creator",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-      rating: 5,
-      text: "As a TikTok creator, I needed to boost my video views to get noticed. Their service delivered exactly what they promised - real views that helped my videos go viral!"
-    },
-    {
-      name: "Emma Rodriguez",
-      role: "Small Business Owner",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
-      rating: 5,
-      text: "Running my boutique's Instagram was challenging until I found Likes.IO. The followers I gained became real customers. My sales increased by 40% in 3 months!"
-    }
-  ];
+  const mainTestimonials = [];
 
   const mainFAQs = [
     {

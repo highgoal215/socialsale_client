@@ -53,7 +53,11 @@ const Checkout = () => {
     
     // Check if postUrl is required for all service types
     if (!formData.postUrl) {
-      alert('Post/Video URL is required for all service types.');
+      if (service.includes('YouTube Subscribers')) {
+        alert('YouTube Channel URL is required for subscriber services.');
+      } else {
+        alert('Post/Video URL is required for all service types.');
+      }
       return;
     }
     
@@ -78,7 +82,7 @@ const Checkout = () => {
           'TikTok Likes': 'likes',
           'TikTok Views': 'views',
           'TikTok Comments': 'comments',
-          'YouTube Followers': 'followers',
+          'YouTube Subscribers': 'subscribers',
           'YouTube Likes': 'likes',
           'YouTube Views': 'views',
           'YouTube Comments': 'comments'
@@ -174,7 +178,7 @@ const Checkout = () => {
                   <h3 className="font-semibold text-lg text-gray-900 dark:text-white">{service}</h3>
                   <span className="text-2xl font-bold text-purple-600 dark:text-purple-400">{price}</span>
                 </div>
-                <p className="text-gray-600 dark:text-gray-300">{packageAmount} {service.split(' ')[1]}</p>
+                <p className="text-gray-600 dark:text-gray-300">{packageAmount} {service.includes('YouTube Subscribers') ? 'Subscribers' : service.split(' ')[1]}</p>
               </div>
 
               {/* Package Selection Options */}
@@ -237,7 +241,7 @@ const Checkout = () => {
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        {service.includes('Instagram') ? 'Instagram Username' : service.includes('TikTok') ? 'TikTok Username' : 'YouTube Username'}
+                        {service.includes('Instagram') ? 'Instagram Username' : service.includes('TikTok') ? 'TikTok Username' : 'YouTube Channel Name'}
                       </label>
                       <Input 
                         name="username"
@@ -254,7 +258,7 @@ const Checkout = () => {
                       </label>
                       <Input 
                         name="postUrl"
-                        placeholder="https://instagram.com/p/your-post-id"
+                        placeholder={service.includes('YouTube') && service.includes('Subscribers') ? "https://youtube.com/@your-channel" : "https://instagram.com/p/your-post-id"}
                         value={formData.postUrl}
                         onChange={handleInputChange}
                         required
@@ -262,7 +266,7 @@ const Checkout = () => {
                       <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                         {service.includes('Instagram') && 'Enter the URL of your Instagram post'}
                         {service.includes('TikTok') && 'Enter the URL of your TikTok video'}
-                        {service.includes('YouTube') && 'Enter the URL of your YouTube video'}
+                        {service.includes('YouTube') && service.includes('Subscribers') ? 'Enter your YouTube channel URL' : 'Enter the URL of your YouTube video'}
                       </p>
                     </div>
                     <div>

@@ -35,7 +35,7 @@ import TikTokFollowers from "./pages/TikTokFollowers";
 import TikTokLikes from "./pages/TikTokLikes";
 import TikTokViews from "./pages/TikTokViews";
 import TikTokComments from "./pages/TikTokComments";
-import YouTubeFollowers from "./pages/YouTubeFollowers";
+import YouTubeSubscribes from "./pages/YouTubeSubscribes";
 import YouTubeLikes from "./pages/YouTubeLikes";
 import YouTubeViews from "./pages/YouTubeViews";
 import YouTubeComments from "./pages/YouTubeComments";
@@ -78,7 +78,7 @@ const App = () => (
               <Route path="/tiktok/views" element={<TikTokViews />} />
               <Route path="/tiktok/comments" element={<TikTokComments />} />
               {/* YouTube Service routes */}
-              <Route path="/youtube/followers" element={<YouTubeFollowers />} />
+              <Route path="/youtube/subscribers" element={<YouTubeSubscribes />} />
               <Route path="/youtube/likes" element={<YouTubeLikes />} />
               <Route path="/youtube/views" element={<YouTubeViews />} />
               <Route path="/youtube/comments" element={<YouTubeComments />} />

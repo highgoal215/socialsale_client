@@ -85,7 +85,7 @@ const InstagramFollowers = () => {
     {
       name: "Sarah Johnson",
       role: "Fashion Influencer",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b829?w=150&h=150&fit=crop&crop=face",
+      image: "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?w=150&h=150&fit=crop&crop=face",
       rating: 5,
       text: "Amazing service! I gained 500 real followers in just 2 days. My engagement rate has improved significantly."
     },

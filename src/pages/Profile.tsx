@@ -257,7 +257,7 @@ const Profile = () => {
                           {orders.slice(0, 3).map((order) => (
                             <div key={order._id} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                               <span className="text-sm text-gray-900 dark:text-white">
-                                {getServiceDisplayName(order.serviceType, order.quality)} - {order.quantity.toLocaleString()}
+                                {getServiceDisplayName(order.serviceType, order.quality, order.category)} - {order.quantity.toLocaleString()}
                               </span>
                               <span className={`text-sm ${getStatusColorClass(order.status)}`}>
                                 {getStatusDisplayName(order.status)}
@@ -451,7 +451,7 @@ const Profile = () => {
                                 {order.orderNumber || `#${order._id.slice(-8)}`}
                               </td>
                               <td className="px-4 py-3 text-sm text-gray-900 dark:text-white">
-                                {getServiceDisplayName(order.serviceType, order.quality)} - {order.quantity.toLocaleString()}
+                                {getServiceDisplayName(order.serviceType, order.quality, order.category)} - {order.quantity.toLocaleString()}
                               </td>
                               <td className="px-4 py-3 text-sm text-gray-900 dark:text-white capitalize">
                                 {order.quality}
