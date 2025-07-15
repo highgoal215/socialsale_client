@@ -13,21 +13,21 @@ import ServiceHowItWorks from '@/components/ServiceHowItWorks';
 import ServiceTestimonials from '@/components/ServiceTestimonials';
 import { useServices } from '@/hooks/useServices';
 
-const YouTubeFollowers = () => {
+const YouTubeSubscribes = () => {
   const [selectedPackage, setSelectedPackage] = useState('');
   const navigate = useNavigate();
 
-  // Fetch YouTube followers services from backend
+  // Fetch YouTube subscribers services from backend
   const { services, loading, error } = useServices({
     category: 'YouTube',
-    type: 'followers',
+    type: 'subscribers',
     active: true
   });
 
   // Transform backend data to match frontend structure
   const packages = services.map(service => ({
     id: service._id || service.id,
-    followers: service.quantity || service.minQuantity,
+    subscribers: service.quantity || service.minQuantity,
     price: `$${service.price}`,
     popular: service.popular || false,
     description: service.description,
@@ -38,7 +38,7 @@ const YouTubeFollowers = () => {
     if (selectedPackage) {
       const pkg = packages.find(p => p.id === selectedPackage);
       if (pkg) {
-        navigate(`/checkout?service=YouTube Subscribers&package=${pkg.followers}&price=${pkg.price}`);
+        navigate(`/checkout?service=YouTube Subscribers&package=${pkg.subscribers}&price=${pkg.price}`);
       }
     }
   };
@@ -54,7 +54,7 @@ const YouTubeFollowers = () => {
     {
       icon: <UserPlus className="h-6 w-6" />,
       title: "Real YouTube Subscribers",
-      description: "All followers come from genuine YouTube users who will actually engage with your content."
+      description: "All subscribers come from genuine YouTube users who will actually engage with your content."
     },
     {
       icon: <Shield className="h-6 w-6" />,
@@ -94,7 +94,7 @@ const YouTubeFollowers = () => {
     {
       name: "Maya Chen",
       role: "Lifestyle Vlogger",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b829?w=150&h=150&fit=crop&crop=face",
+      image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face`",
       rating: 5,
       text: "The subscribers I gained are real and engaged. My channel's growth has been incredible since using this service!"
     },
@@ -230,7 +230,7 @@ const YouTubeFollowers = () => {
                       )}
                       <CardHeader className="text-center">
                         <CardTitle className="text-2xl font-bold text-red-600">
-                          {pkg.followers} Subscribers
+                          {pkg.subscribers} Subscribers
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="text-center">
@@ -255,7 +255,7 @@ const YouTubeFollowers = () => {
                     disabled={!selectedPackage}
                     onClick={handleOrderClick}
                   >
-                    {selectedPackage ? `Order ${packages.find(p => p.id === selectedPackage)?.followers} Subscribers` : 'Select a Package'}
+                    {selectedPackage ? `Order ${packages.find(p => p.id === selectedPackage)?.subscribers} Subscribers` : 'Select a Package'}
                   </Button>
                 </div>
               </>
@@ -274,4 +274,4 @@ const YouTubeFollowers = () => {
   );
 };
 
-export default YouTubeFollowers;
+export default YouTubeSubscribes;

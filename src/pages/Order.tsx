@@ -23,8 +23,8 @@ const Order = () => {
     additionalInfo: ''
   });
 
-  // Check if postUrl is required for this service type (not needed for Followers)
-  const requiresPostUrl = !service.includes('Followers');
+  // Check if postUrl is required for this service type (not needed for Followers/Subscribers)
+  const requiresPostUrl = !service.includes('Followers') && !service.includes('Subscribers');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -82,7 +82,7 @@ const Order = () => {
               <CardContent className="space-y-4">
                 <div className="border-b pb-4">
                   <h3 className="font-semibold text-lg">{service}</h3>
-                  <p className="text-gray-600 dark:text-gray-300">{package_param} {service.includes('Followers') ? 'Followers' : service.includes('Likes') ? 'Likes' : service.includes('Views') ? 'Views' : 'Comments'}</p>
+                  <p className="text-gray-600 dark:text-gray-300">{package_param} {service.includes('Followers') ? 'Followers' : service.includes('Subscribers') ? 'Subscribers' : service.includes('Likes') ? 'Likes' : service.includes('Views') ? 'Views' : 'Comments'}</p>
                 </div>
                 
                 <div className="flex justify-between items-center text-lg">

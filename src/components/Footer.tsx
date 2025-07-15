@@ -27,7 +27,7 @@ const Footer = () => {
     {
       title: "YouTube Services",
       links: [
-        { name: "YouTube Subscribers", path: "/youtube/followers" },
+        { name: "YouTube Subscribers", path: "/youtube/subscribers" },
         { name: "YouTube Likes", path: "/youtube/likes" },
         { name: "YouTube Views", path: "/youtube/views" },
         { name: "YouTube Comments", path: "/youtube/comments" }
@@ -38,7 +38,7 @@ const Footer = () => {
       links: [
         { name: "About Us", path: "/about" },
         { name: "How It Works", path: "/how-it-works" },
-        { name: "Pricing", path: "/pricing" },
+        // { name: "Pricing", path: "/pricing" },
         { name: "Reviews", path: "/reviews" },
         { name: "Blog", path: "/blog" },
         { name: "Contact", path: "/contact" },
@@ -108,7 +108,7 @@ const Footer = () => {
         <div className="border-t border-gray-800 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-gray-400">
-              © 2024 Likes.IO. All rights reserved.
+              © 2025 Likes.IO. All rights reserved.
             </div>
           </div>
         </div>
