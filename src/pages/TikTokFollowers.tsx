@@ -34,8 +34,6 @@ const TikTokFollowers = () => {
     features: service.features || []
   }));
 
-  console.log("Packages>>>>>>>>>>", packages)
-
   const handleOrderClick = () => {
     if (selectedPackage) {
       const pkg = packages.find(p => p.id === selectedPackage);

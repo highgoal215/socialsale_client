@@ -60,26 +60,26 @@ const ClientNotificationTest = () => {
 
     try {
       // Test 1: API Connection
-      console.log('🧪 Testing API Connection...');
+      // console.log('🧪 Testing API Connection...');
       await fetchNotifications();
       results.apiConnection = true;
-      console.log('✅ API Connection: PASSED');
+      // console.log('✅ API Connection: PASSED');
 
       // Test 2: Socket Connection
-      console.log('🧪 Testing Socket Connection...');
+      // console.log('🧪 Testing Socket Connection...');
       const socketStatus = socketService.getConnectionStatus();
       results.socketConnection = socketStatus;
-      console.log(`✅ Socket Connection: ${socketStatus ? 'CONNECTED' : 'DISCONNECTED'}`);
+      // console.log(`✅ Socket Connection: ${socketStatus ? 'CONNECTED' : 'DISCONNECTED'}`);
 
       // Test 3: Preferences Loaded
-      console.log('🧪 Testing Preferences Loaded...');
+      // console.log('🧪 Testing Preferences Loaded...');
       results.preferencesLoaded = preferences && Object.keys(preferences).length > 0;
-      console.log(`✅ Preferences Loaded: ${results.preferencesLoaded ? 'YES' : 'NO'}`);
+      // console.log(`✅ Preferences Loaded: ${results.preferencesLoaded ? 'YES' : 'NO'}`);
 
       // Test 4: Notifications Loaded
-      console.log('🧪 Testing Notifications Loaded...');
+      // console.log('🧪 Testing Notifications Loaded...');
       results.notificationsLoaded = Array.isArray(notifications);
-      console.log(`✅ Notifications Loaded: ${results.notificationsLoaded ? 'YES' : 'NO'}`);
+      // console.log(`✅ Notifications Loaded: ${results.notificationsLoaded ? 'YES' : 'NO'}`);
 
     } catch (error) {
       console.error('❌ Test failed:', error);
@@ -94,7 +94,7 @@ const ClientNotificationTest = () => {
       const firstUnread = notifications.find(n => !n.read);
       if (firstUnread) {
         await markAsRead(firstUnread._id);
-        console.log('✅ Mark as Read Test: PASSED');
+        // console.log('✅ Mark as Read Test: PASSED');
       }
     }
   };
@@ -102,7 +102,7 @@ const ClientNotificationTest = () => {
   const testDeleteNotification = async () => {
     if (notifications.length > 0) {
       await deleteNotification(notifications[0]._id);
-      console.log('✅ Delete Notification Test: PASSED');
+      // console.log('✅ Delete Notification Test: PASSED');
     }
   };
 
@@ -118,7 +118,7 @@ const ClientNotificationTest = () => {
       push: preferences.push
     };
     await updatePreferences(newPreferences);
-    console.log('✅ Update Preferences Test: PASSED');
+    // console.log('✅ Update Preferences Test: PASSED');
   };
 
   const getTestStatusColor = (passed: boolean) => {

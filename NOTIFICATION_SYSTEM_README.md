@@ -253,7 +253,7 @@ localStorage.setItem('debug', 'notifications');
 
 ### Environment Variables
 ```env
-VITE_BACKEND_URL=http://localhost:5005/api
+VITE_BACKEND_URL=https://likes.io/api
 ```
 
 ## Conclusion

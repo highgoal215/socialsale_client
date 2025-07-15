@@ -27,12 +27,7 @@ const Blog = () => {
       if (limit) params.limit = limit;
       if (category && category !== 'All') params.category = category;
 
-      console.log('Fetching blog posts with params:', params);
-      console.log('Selected category:', category);
-
       const response = await GetPublicBlogs(params);
-      console.log('Blog posts response:', response.data);
-      console.log('Number of posts received:', response.data.length);
       
       setBlogPosts(response.data);
       setHasMore(response.data.length === (limit || postsPerPage));

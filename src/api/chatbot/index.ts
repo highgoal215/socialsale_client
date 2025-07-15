@@ -17,15 +17,16 @@ export interface ChatResponse {
 }
 
 // Base API configuration
-const API_BASE_URL = import.meta.env.BACKEND_URL || 'http://localhost:5005/api';
+// const API_BASE_URL = import.meta.env.BACKEND_URL || 'https://likes.io/api';
+const API_BASE_URL = import.meta.env.BACKEND_URL || 'https://likes.io/api';
 
 // Send message to chatbot
 export const sendMessage = async (
   prompt: string, 
   conversationHistory: ChatMessage[] = []
 ): Promise<ChatResponse> => {
-  console.log('prompt:', prompt);
-  console.log('Conversation history:', conversationHistory);
+  // console.log('prompt:', prompt);
+  // console.log('Conversation history:', conversationHistory);
     try {
     const response = await fetch(`${API_BASE_URL}/chatbot/send-message`, {
       method: 'POST',

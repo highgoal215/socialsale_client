@@ -34,14 +34,12 @@ class SocketService {
     if (!this.socket) return;
 
     this.socket.on('connect', () => {
-      console.log('🔌 Socket connected to server');
       this.isConnected = true;
       this.reconnectAttempts = 0;
       this.connectListeners.forEach(listener => listener());
     });
 
     this.socket.on('disconnect', () => {
-      console.log('🔌 Socket disconnected from server');
       this.isConnected = false;
       this.disconnectListeners.forEach(listener => listener());
     });
@@ -56,7 +54,6 @@ class SocketService {
     });
 
     this.socket.on('reconnect', (attemptNumber) => {
-      console.log(`🔌 Socket reconnected after ${attemptNumber} attempts`);
       this.isConnected = true;
       this.reconnectAttempts = 0;
     });
@@ -67,7 +64,6 @@ class SocketService {
 
     // Listen for new notifications
     this.socket.on('new_notification', (notification) => {
-      console.log('🔔 Received real-time notification:', notification);
       this.newNotificationListeners.forEach(listener => listener(notification));
     });
   }
@@ -93,14 +89,12 @@ class SocketService {
 
   public joinUserRoom(userId: string) {
     if (this.socket && this.isConnected) {
-      console.log(`🔌 Joining user room: ${userId}`);
       this.socket.emit('join-user', userId);
     }
   }
 
   public leaveUserRoom(userId: string) {
     if (this.socket && this.isConnected) {
-      console.log(`🔌 Leaving user room: ${userId}`);
       this.socket.emit('leave-user', userId);
     }
   }

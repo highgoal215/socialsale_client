@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const Backend_URL = import.meta.env.BACKEND_URL || 'http://localhost:5005/api';
+const Backend_URL = import.meta.env.BACKEND_URL || 'https://likes.io/api';
 
 interface ReviewFormData {
     name: string;
@@ -12,8 +12,6 @@ interface ReviewFormData {
 }
 
 export const SubmitReview = async (formData: ReviewFormData) => {
-    console.log("Submit Review Function:", formData);
-    
     try {
         const response = await axios.post(`${Backend_URL}/leavereview`, {
             username: formData.name,  // Backend expects 'username' instead of 'name'
@@ -24,7 +22,6 @@ export const SubmitReview = async (formData: ReviewFormData) => {
             content: formData.review
         });
         
-        console.log("Review submitted successfully:", response.data);
         return response.data;
     } catch (error: any) {
         console.error("Submit Review Error:", error);
@@ -59,14 +56,10 @@ export const SubmitReview = async (formData: ReviewFormData) => {
 
 // Get All Reviews Function
 export const GetAllReviews = async () => {
-    console.log("Get All Reviews Function");
-    
     try {
         // Try without authentication first (reviews are typically public)
         const response = await axios.get(`${Backend_URL}/leavereview/public`);
         
-        console.log("Reviews fetched successfully:", response.data);
-        console.log("------------>",response.data);
         return response.data;
     } catch (error: any) {
         console.error("Get All Reviews Error:", error);

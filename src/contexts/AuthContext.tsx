@@ -68,7 +68,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             // Simulate API delay
             const response = await SignIn(email, password);
 
-            console.log("RESPONSE ==>", response);
+   
 
             if (response.success === true) {
                 localStorage.removeItem("userToken");

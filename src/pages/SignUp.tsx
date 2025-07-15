@@ -47,7 +47,6 @@ const SignUp = () => {
     try {
       // Check if client ID is configured
       const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-      console.log("Client ID:", clientId);
       if (!clientId) {
         console.error('Google Client ID not configured');
         toast({
@@ -60,7 +59,6 @@ const SignUp = () => {
       
       // Build the Google OAuth URL for popup flow
       const redirectUri = `${window.location.origin}/google-callback`;
-      console.log("Redirect URI:", redirectUri);
       const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=token&scope=email profile&state=${encodeURIComponent(window.location.pathname)}`;
       
       // Open popup with specific dimensions and features

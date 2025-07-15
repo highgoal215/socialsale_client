@@ -1,6 +1,7 @@
 import axios from "axios"
 
-const Backend_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5005/api/client';
+// const Backend_URL = import.meta.env.VITE_BACKEND_URL || 'https://likes.io/api/client';
+const Backend_URL = import.meta.env.VITE_BACKEND_URL || 'https://likes.io/api';
 
 // Notification interface
 interface Notification {
@@ -68,7 +69,7 @@ export const GetUserNotifications = async (params: GetNotificationsParams = {}):
       withCredentials: true,
     });
     
-    console.log("User notifications retrieved successfully:", response.data);
+    // console.log("User notifications retrieved successfully:", response.data);
     return response.data;
   } catch (error: any) {
     console.error("Get User Notifications Error:", error);
@@ -141,7 +142,7 @@ export const GetNotification = async (notificationId: string): Promise<GetNotifi
       withCredentials: true,
     });
     
-    console.log("Notification retrieved successfully:", response.data);
+    // console.log("Notification retrieved successfully:", response.data);
     return response.data;
   } catch (error: any) {
     console.error("Get Notification Error:", error);
@@ -197,7 +198,7 @@ export const MarkNotificationAsRead = async (notificationId: string): Promise<Ma
       withCredentials: true,
     });
     
-    console.log("Notification marked as read successfully:", response.data);
+    // console.log("Notification marked as read successfully:", response.data);
     return response.data;
   } catch (error: any) {
     console.error("Mark Notification as Read Error:", error);
@@ -253,7 +254,7 @@ export const MarkAllNotificationsAsRead = async (): Promise<MarkAllAsReadRespons
       withCredentials: true,
     });
     
-    console.log("All notifications marked as read successfully:", response.data);
+    // console.log("All notifications marked as read successfully:", response.data);
     return response.data;
   } catch (error: any) {
     console.error("Mark All Notifications as Read Error:", error);
@@ -309,7 +310,7 @@ export const DeleteNotification = async (notificationId: string): Promise<Delete
       withCredentials: true,
     });
     
-    console.log("Notification deleted successfully:", response.data);
+    // console.log("Notification deleted successfully:", response.data);
     return response.data;
   } catch (error: any) {
     console.error("Delete Notification Error:", error);
@@ -365,7 +366,7 @@ export const ClearAllNotifications = async (): Promise<ClearAllNotificationsResp
       withCredentials: true,
     });
     
-    console.log("All notifications cleared successfully:", response.data);
+    // console.log("All notifications cleared successfully:", response.data);
     return response.data;
   } catch (error: any) {
     console.error("Clear All Notifications Error:", error);
@@ -422,7 +423,7 @@ export const GetUnreadCount = async (): Promise<GetUnreadCountResponse> => {
       withCredentials: true,
     });
     
-    console.log("Unread count retrieved successfully:", response.data);
+    // console.log("Unread count retrieved successfully:", response.data);
     return response.data;
   } catch (error: any) {
     console.error("Get Unread Count Error:", error);

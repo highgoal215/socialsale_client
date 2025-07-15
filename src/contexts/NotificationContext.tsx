@@ -263,26 +263,26 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
     }
 
     // Connect to socket for real-time notifications
-    console.log('🔌 Connecting to Socket.IO for real-time notifications...');
+    // console.log('🔌 Connecting to Socket.IO for real-time notifications...');
     socketService.connect();
     
     // Join user room for real-time notifications
-    socketService.joinUserRoom(user._id);
+    socketService.joinUserRoom(user.id);
 
     // Handle new notifications from socket
     const handleNewNotification = (notification: any) => {
-      console.log('🔔 Received real-time notification:', notification);
+      // console.log('🔔 Received real-time notification:', notification);
       setNotifications(prev => [notification, ...prev]);
       setUnreadCount(prev => prev + 1);
     };
 
     // Handle socket connection events
     const handleConnect = () => {
-      console.log('✅ Socket.IO connected successfully');
+      // console.log('✅ Socket.IO connected successfully');
     };
 
     const handleDisconnect = () => {
-      console.log('❌ Socket.IO disconnected');
+      // console.log('❌ Socket.IO disconnected');
     };
 
     // Set up socket event listeners
@@ -295,11 +295,11 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
     // Cleanup function
     return () => {
-      console.log('🔌 Cleaning up Socket.IO listeners...');
+      // console.log('🔌 Cleaning up Socket.IO listeners...');
       socketService.offNewNotification(handleNewNotification);
       socketService.offConnect(handleConnect);
       socketService.offDisconnect(handleDisconnect);
-      socketService.leaveUserRoom(user._id);
+      socketService.leaveUserRoom(user.id);
       socketService.disconnect();
       clearInterval(interval);
     };

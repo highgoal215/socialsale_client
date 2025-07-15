@@ -11,8 +11,6 @@ const GoogleCallback = () => {
         const error = params.get('error');
         const errorDescription = params.get('error_description');
 
-        console.log('OAuth callback received:', { accessToken, error, errorDescription });
-
         if (error) {
           // Handle error
           const errorMessage = errorDescription || error;
@@ -31,15 +29,12 @@ const GoogleCallback = () => {
           }
         } else if (accessToken) {
           // Send success message to parent window
-          console.log('Sending success message to parent window');
-          
           if (window.opener && !window.opener.closed) {
             try {
               window.opener.postMessage({
                 type: 'GOOGLE_OAUTH_SUCCESS',
                 accessToken: accessToken
               }, window.location.origin);
-              console.log('Success message sent to parent window');
             } catch (e) {
               console.error('Failed to send success message to parent:', e);
             }
