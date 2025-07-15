@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const Backend_URL = import.meta.env.BACKEND_URL || 'http://localhost:5005/api';
+const Backend_URL = import.meta.env.BACKEND_URL || 'https://likes.io/api';
 
 // Map frontend service names to backend service types
 const mapServiceType = (serviceName: string): string => {
