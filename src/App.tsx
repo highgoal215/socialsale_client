@@ -68,20 +68,20 @@ const App = () => (
               <Route path="/order" element={<Order />} />
               <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
               {/* Instagram Service routes */}
-              <Route path="/instagram/followers" element={<InstagramFollowers />} />
-              <Route path="/instagram/likes" element={<InstagramLikes />} />
-              <Route path="/instagram/views" element={<InstagramViews />} />
-              <Route path="/instagram/comments" element={<InstagramComments />} />
+              <Route path="/buy-instagram-followers" element={<InstagramFollowers />} />
+              <Route path="/buy-instagram-likes" element={<InstagramLikes />} />
+              <Route path="/buy-instagram-views" element={<InstagramViews />} />
+              <Route path="/buy-instagram-comments" element={<InstagramComments />} />
               {/* TikTok Service routes */}
-              <Route path="/tiktok/followers" element={<TikTokFollowers />} />
-              <Route path="/tiktok/likes" element={<TikTokLikes />} />
-              <Route path="/tiktok/views" element={<TikTokViews />} />
-              <Route path="/tiktok/comments" element={<TikTokComments />} />
+              <Route path="/buy-tiktok-followers" element={<TikTokFollowers />} />
+              <Route path="/buy-tiktok-likes" element={<TikTokLikes />} />
+              <Route path="/buy-tiktok-views" element={<TikTokViews />} />
+              <Route path="/buy-tiktok-comments" element={<TikTokComments />} />
               {/* YouTube Service routes */}
-              <Route path="/youtube/subscribers" element={<YouTubeSubscribes />} />
-              <Route path="/youtube/likes" element={<YouTubeLikes />} />
-              <Route path="/youtube/views" element={<YouTubeViews />} />
-              <Route path="/youtube/comments" element={<YouTubeComments />} />
+              <Route path="/buy-youtube-subscribers" element={<YouTubeSubscribes />} />
+              <Route path="/buy-youtube-likes" element={<YouTubeLikes />} />
+              <Route path="/buy-youtube-views" element={<YouTubeViews />} />
+              <Route path="/buy-youtube-comments" element={<YouTubeComments />} />
               <Route path="/order" element={<Order />} />
               {/* New pages */}
               <Route path="/about" element={<About />} />
