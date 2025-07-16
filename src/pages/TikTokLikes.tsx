@@ -86,7 +86,7 @@ const TikTokLikes = () => {
     {
       name: "Maya Chen",
       role: "Content Creator",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b829?w=150&h=150&fit=crop&crop=face",
+      image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face",
       rating: 5,
       text: "My TikTok videos started getting way more organic likes after I boosted them. The algorithm picked them up!"
     },
