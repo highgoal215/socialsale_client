@@ -23,7 +23,7 @@ const UseCaseSection = () => {
       testimonial: {
         name: "Lira Martinez",
         role: "Lifestyle Influencer",
-        image: "https://images.unsplash.com/photo-1494790108755-2616b612b829?w=200&h=200&fit=crop&crop=face",
+        image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
         metrics: { followers: "125K", engagement: "8.4%", growth: "+340%" },
         quote: "Thanks to Likes.IO, I went from 5K to 125K followers in 6 months. The quality of engagement is incredible!"
       }
