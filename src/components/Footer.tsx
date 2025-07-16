@@ -9,28 +9,28 @@ const Footer = () => {
     {
       title: "Instagram Services",
       links: [
-        { name: "Instagram Followers", path: "/instagram/followers" },
-        { name: "Instagram Likes", path: "/instagram/likes" },
-        { name: "Instagram Views", path: "/instagram/views" },
-        { name: "Instagram Comments", path: "/instagram/comments" }
+        { name: "Instagram Followers", path: "/buy-instagram-followers" },
+        { name: "Instagram Likes", path: "/buy-instagram-likes" },
+        { name: "Instagram Views", path: "/buy-instagram-views" },
+        { name: "Instagram Comments", path: "/buy-instagram-comments" }
       ]
     },
     {
       title: "TikTok Services",
       links: [
-        { name: "TikTok Followers", path: "/tiktok/followers" },
-        { name: "TikTok Likes", path: "/tiktok/likes" },
-        { name: "TikTok Views", path: "/tiktok/views" },
-        { name: "TikTok Comments", path: "/tiktok/comments" }
+        { name: "TikTok Followers", path: "/buy-tiktok-followers" },
+        { name: "TikTok Likes", path: "/buy-tiktok-likes" },
+        { name: "TikTok Views", path: "/buy-tiktok-views" },
+        { name: "TikTok Comments", path: "/buy-tiktok-comments" }
       ]
     },
     {
       title: "YouTube Services",
       links: [
-        { name: "YouTube Subscribers", path: "/youtube/subscribers" },
-        { name: "YouTube Likes", path: "/youtube/likes" },
-        { name: "YouTube Views", path: "/youtube/views" },
-        { name: "YouTube Comments", path: "/youtube/comments" }
+        { name: "YouTube Subscribers", path: "/buy-youtube-subscribers" },
+        { name: "YouTube Likes", path: "/buy-youtube-likes" },
+        { name: "YouTube Views", path: "/buy-youtube-views" },
+        { name: "YouTube Comments", path: "/buy-youtube-comments" }
       ]
     },
     {
