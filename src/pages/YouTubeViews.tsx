@@ -93,7 +93,7 @@ const YouTubeViews = () => {
     {
       name: "Olivia Martinez",
       role: "Beauty Guru",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b829?w=150&h=150&fit=crop&crop=face",
+      image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face",
       rating: 5,
       text: "Fast delivery and real views! My makeup tutorials are now getting organic traction and more subscribers."
     },

@@ -93,7 +93,7 @@ const YouTubeLikes = () => {
     {
       name: "Sophie Williams",
       role: "Fitness Coach",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b829?w=150&h=150&fit=crop&crop=face",
+      image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face",
       rating: 5,
       text: "The likes came fast and looked completely natural. My workout videos are now trending in my niche!"
     },
