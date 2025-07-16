@@ -86,7 +86,7 @@ const InstagramLikes = () => {
     {
       name: "Isabella Martinez",
       role: "Fashion Blogger",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b829?w=150&h=150&fit=crop&crop=face",
+      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
       rating: 5,
       text: "My fashion posts started getting way more organic likes after I boosted them. Amazing results!"
     },

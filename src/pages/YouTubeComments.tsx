@@ -86,7 +86,7 @@ const YouTubeComments = () => {
     {
       name: "Jessica Parker",
       role: "Cooking Channel",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b829?w=150&h=150&fit=crop&crop=face",
+      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
       rating: 5,
       text: "The comments on my recipe videos look so natural! They sparked real conversations with my viewers."
     },
