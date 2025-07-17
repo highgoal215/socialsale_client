@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const Backend_URL = import.meta.env.BACKEND_URL || 'https://api.likes.io/api';
+const Backend_URL = import.meta.env.BACKEND_URL || 'http://localhost:5000/api';
 
 interface BlogPost {
   _id: string;
