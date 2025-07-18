@@ -1,7 +1,14 @@
 import React from 'react';
 import { Star, Shield, Clock, Smile } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const RatingTrustSection = () => {
+  const navigate = useNavigate();
+
+  const handleReadReviews = () => {
+    navigate('/reviews');
+  };
+
   const trustPoints = [
     {
       icon: Shield,
@@ -104,7 +111,10 @@ const RatingTrustSection = () => {
             <p className="text-gray-600 dark:text-gray-300 mb-4">
               Over 25,000 verified reviews across all platforms
             </p>
-            <button className="text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 font-medium underline">
+            <button 
+              onClick={handleReadReviews}
+              className="text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 font-medium underline"
+            >
               Read All Reviews
             </button>
           </div>
