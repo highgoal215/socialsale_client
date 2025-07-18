@@ -20,7 +20,7 @@ This guide helps resolve WebSocket connection issues between the client and back
 #### A. Verify Backend Server
 ```bash
 # Check if backend is running on port 5005
-curl http://localhost:5005/api/health
+curl https://api.likes.io/api/health
 
 # Expected response:
 {
@@ -76,7 +76,7 @@ transports: ['websocket', 'polling']
 #### C. Use HTTP Instead of HTTPS in Development
 ```javascript
 // In environment.ts
-backendUrl: 'http://localhost:5005'  // Not https
+backendUrl: 'https://api.likes.io'  // Not https
 ```
 
 ### 3. 404 Not Found Error
@@ -117,7 +117,7 @@ VITE_ENABLE_WEBSOCKET_DEBUG=true
 ### Required Environment Variables
 ```bash
 # Backend URL
-VITE_BACKEND_URL=http://localhost:5005
+VITE_BACKEND_URL=https://api.likes.io
 
 # Socket Configuration
 VITE_SOCKET_ENABLED=true
@@ -144,7 +144,7 @@ console.log(socketService.getConnectionInfo());
 
 ### 2. Backend Health Check
 ```bash
-curl http://localhost:5005/api/health
+curl https://api.likes.io/api/health
 ```
 
 ### 3. Socket.IO Test
@@ -155,7 +155,7 @@ npm install -g socket.io-client
 # Test connection
 node -e "
 const io = require('socket.io-client');
-const socket = io('http://localhost:5005');
+const socket = io('https://api.likes.io');
 socket.on('connect', () => console.log('Connected:', socket.id));
 socket.on('connect_error', (err) => console.log('Error:', err));
 "

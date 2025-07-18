@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const BACKEND_URL = 'http://localhost:5005/api';
+const BACKEND_URL = 'https://api.likes.io/api';
 
 async function testReviewIntegration() {
   console.log('🧪 Testing Review System Integration...\n');

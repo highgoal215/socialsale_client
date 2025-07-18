@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const Backend_URL = import.meta.env.BACKEND_URL || 'http://localhost:5005/api';
-const Backend_URL = import.meta.env.BACKEND_URL || 'http://localhost:5005/api';
+// const Backend_URL = import.meta.env.BACKEND_URL || 'https://api.likes.io/api';
+const Backend_URL = import.meta.env.BACKEND_URL || 'https://api.likes.io/api';
 
 interface ServiceQueryParams {
   type?: string;

@@ -1,7 +1,7 @@
 const io = require('socket.io-client');
 
 // Configuration
-const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:5005';
+const BACKEND_URL = process.env.BACKEND_URL || 'https://api.likes.io';
 const TIMEOUT = 10000;
 
 console.log('🔌 Testing WebSocket connection to:', BACKEND_URL);
