@@ -4,11 +4,13 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 import { AuthProvider } from "./contexts/AuthContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ToastNotification from "./components/ToastNotification";
 import LiveChat from "./components/LiveChat";
+// import WebSocketStatus from "./components/WebSocketStatus";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
@@ -19,6 +21,7 @@ import Checkout from "./pages/Checkout";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import Order from "./pages/Order";
+import PostSelection from "./pages/PostSelection";
 import Contact from "./pages/Contact";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
@@ -49,64 +52,63 @@ import GoogleCallback from "./pages/GoogleCallback";
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <NotificationProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <ToastNotification />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:id" element={<BlogPost />} />
-              <Route path="/reviews" element={<Reviews />} />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/order" element={<Order />} />
-              <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-              {/* Instagram Service routes */}
-              <Route path="/buy-instagram-followers" element={<InstagramFollowers />} />
-              <Route path="/buy-instagram-likes" element={<InstagramLikes />} />
-              <Route path="/buy-instagram-views" element={<InstagramViews />} />
-              <Route path="/buy-instagram-comments" element={<InstagramComments />} />
-              {/* TikTok Service routes */}
-              <Route path="/buy-tiktok-followers" element={<TikTokFollowers />} />
-              <Route path="/buy-tiktok-likes" element={<TikTokLikes />} />
-              <Route path="/buy-tiktok-views" element={<TikTokViews />} />
-              <Route path="/buy-tiktok-comments" element={<TikTokComments />} />
-              {/* YouTube Service routes */}
-              <Route path="/buy-youtube-subscribers" element={<YouTubeSubscribes />} />
-              <Route path="/buy-youtube-likes" element={<YouTubeLikes />} />
-              <Route path="/buy-youtube-views" element={<YouTubeViews />} />
-              <Route path="/buy-youtube-comments" element={<YouTubeComments />} />
-              <Route path="/order" element={<Order />} />
-              {/* New pages */}
-              <Route path="/about" element={<About />} />
-              <Route path="/how-it-works" element={<HowItWorks />} />
-              <Route path="/live-chat" element={<LiveChatPage />} />
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="/google-callback" element={<GoogleCallback />} />
-
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/privacy" element={<Privacy />} />
-              <Route path="/terms" element={<Terms />} />
-              <Route path="/leave-review" element={<LeaveReview />} />
-              <Route path="/help" element={<Help />} />
-              <Route path="/support" element={<Support />} />
-              <Route path="/tracking" element={<Tracking />} />
-              <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-            <LiveChat />
-          </BrowserRouter>
-        </TooltipProvider>
-      </NotificationProvider>
-    </AuthProvider>
-  </QueryClientProvider>
+  <HelmetProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <NotificationProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <ToastNotification />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/blog/:id" element={<BlogPost />} />
+                <Route path="/reviews" element={<Reviews />} />
+                <Route path="/leave-review" element={<LeaveReview />} />
+                <Route path="/post-selection" element={<PostSelection />} />
+                <Route path="/checkout" element={<Checkout />} />
+                <Route path="/order" element={<Order />} />
+                <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+                {/* Instagram Service routes */}
+                <Route path="/buy-instagram-followers" element={<InstagramFollowers />} />
+                <Route path="/buy-instagram-likes" element={<InstagramLikes />} />
+                <Route path="/buy-instagram-views" element={<InstagramViews />} />
+                <Route path="/buy-instagram-comments" element={<InstagramComments />} />
+                {/* TikTok Service routes */}
+                <Route path="/buy-tiktok-followers" element={<TikTokFollowers />} />
+                <Route path="/buy-tiktok-likes" element={<TikTokLikes />} />
+                <Route path="/buy-tiktok-views" element={<TikTokViews />} />
+                <Route path="/buy-tiktok-comments" element={<TikTokComments />} />
+                {/* YouTube Service routes */}
+                <Route path="/buy-youtube-subscribers" element={<YouTubeSubscribes />} />
+                <Route path="/buy-youtube-likes" element={<YouTubeLikes />} />
+                <Route path="/buy-youtube-views" element={<YouTubeViews />} />
+                <Route path="/buy-youtube-comments" element={<YouTubeComments />} />
+                {/* Other routes */}
+                <Route path="/about" element={<About />} />
+                <Route path="/how-it-works" element={<HowItWorks />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/live-chat" element={<LiveChatPage />} />
+                <Route path="/faq" element={<FAQ />} />
+                <Route path="/privacy" element={<Privacy />} />
+                <Route path="/terms" element={<Terms />} />
+                <Route path="/tracking" element={<Tracking />} />
+                <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
+                <Route path="/auth/google/callback" element={<GoogleCallback />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+              <LiveChat />
+              {/* <WebSocketStatus /> */}
+            </BrowserRouter>
+          </TooltipProvider>
+        </NotificationProvider>
+      </AuthProvider>
+    </QueryClientProvider>
+  </HelmetProvider>
 );
 
 export default App;

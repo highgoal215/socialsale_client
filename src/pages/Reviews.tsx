@@ -1,89 +1,126 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { Star, Loader2 } from 'lucide-react';
-import { GetAllReviews } from '@/api/review';
+import { Star, Loader2, RefreshCw, ThumbsUp } from 'lucide-react';
+import { GetAllReviews, VoteHelpful } from '@/api/review';
+import { useToast } from '@/hooks/use-toast';
 
 interface Review {
-  id: string;
+  _id: string;
   username: string;
-  email: string;
   serviceUsed: string;
   rating: number;
   reviewTitle: string;
   content: string;
   createdAt: string;
-  verified?: boolean;
+  isVerified?: boolean;
+  helpfulVotes?: number;
+  status?: string;
 }
 
 const Reviews = () => {
+  const { toast } = useToast();
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [refreshing, setRefreshing] = useState(false);
+  const [votingReviews, setVotingReviews] = useState<Set<string>>(new Set());
+
+  const fetchReviews = async (isRefresh = false) => {
+    try {
+      if (isRefresh) {
+        setRefreshing(true);
+      } else {
+        setLoading(true);
+      }
+      setError(null);
+      
+      const response = await GetAllReviews();
+      
+      if (response.success === false) {
+        setError(response.message || 'Failed to fetch reviews');
+        return;
+      }
+      
+      // Handle the API response structure
+      let reviewsData: Review[] = [];
+      
+      if (response.data && Array.isArray(response.data)) {
+        reviewsData = response.data;
+      } else if (Array.isArray(response)) {
+        reviewsData = response;
+      } else {
+        setError('Invalid response format from server');
+        return;
+      }
+      
+      // Filter only approved reviews for public display
+      const approvedReviews = reviewsData.filter((review: Review) => 
+        review.status === 'approved' || review.status === undefined
+      );
+      
+      setReviews(approvedReviews);
+    } catch (err) {
+      console.error('Error fetching reviews:', err);
+      setError('An error occurred while fetching reviews');
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        setLoading(true);
-        const response = await GetAllReviews();
-        
-        if (response.success === false) {
-          setError(response.message || 'Failed to fetch reviews');
-        } else {
-          // Handle different response structures
-          let reviewsData = response;
-          
-          // If response has a data property, use that
-          if (response.data && Array.isArray(response.data)) {
-            reviewsData = response.data;
-          }
-          // If response is directly an array, use it
-          else if (Array.isArray(response)) {
-            reviewsData = response;
-          }
-          // If response has a reviews property, use that
-          else if (response.reviews && Array.isArray(response.reviews)) {
-            reviewsData = response.reviews;
-          }
-          // If none of the above, try to find any array in the response
-          else if (typeof response === 'object' && response !== null) {
-            const arrayKeys = Object.keys(response).filter(key => Array.isArray(response[key]));
-            if (arrayKeys.length > 0) {
-              reviewsData = response[arrayKeys[0]];
-            } else {
-              setError('No reviews data found in response');
-              return;
-            }
-          } else {
-            setError('Invalid response format from server');
-            return;
-          }
-          
-          // Transform the API response to match our component's expected format
-          const transformedReviews = reviewsData.map((review: any) => ({
-            id: review._id || review.id || Math.random().toString(),
-            username: review.username || review.name || 'Anonymous',
-            email: review.email || '',
-            serviceUsed: review.serviceUsed || review.service || 'Unknown Service',
-            rating: review.rating || 5,
-            reviewTitle: review.reviewTitle || review.title || '',
-            content: review.content || review.review || review.reviewText || '',
-            createdAt: review.createdAt || review.date || new Date().toISOString(),
-            verified: review.verified !== false // Default to true unless explicitly false
-          }));
-          
-          setReviews(transformedReviews);
-        }
-      } catch (err) {
-        setError('An error occurred while fetching reviews');
-        console.error('Error fetching reviews:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchReviews();
   }, []);
+
+  const handleRefresh = () => {
+    fetchReviews(true);
+  };
+
+  const handleVoteHelpful = async (reviewId: string) => {
+    if (votingReviews.has(reviewId)) return;
+    
+    setVotingReviews(prev => new Set(prev).add(reviewId));
+    
+    try {
+      const response = await VoteHelpful(reviewId);
+      
+      if (response.success) {
+        // Update the review's helpful votes count
+        setReviews(prevReviews => 
+          prevReviews.map(review => 
+            review._id === reviewId 
+              ? { ...review, helpfulVotes: (review.helpfulVotes || 0) + 1 }
+              : review
+          )
+        );
+        
+        toast({
+          title: "Vote recorded!",
+          description: "Thank you for your feedback.",
+        });
+      } else {
+        toast({
+          title: "Vote failed",
+          description: response.message || "Failed to record your vote.",
+          variant: "destructive"
+        });
+      }
+    } catch (error) {
+      console.error('Error voting for review:', error);
+      toast({
+        title: "Vote failed",
+        description: "An unexpected error occurred.",
+        variant: "destructive"
+      });
+    } finally {
+      setVotingReviews(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(reviewId);
+        return newSet;
+      });
+    }
+  };
 
   const stats = [
     { label: "Happy Customers", value: "100K+" },
@@ -113,6 +150,11 @@ const Reviews = () => {
     if (diffDays < 365) return `${Math.floor(diffDays / 30)} months ago`;
     return `${Math.floor(diffDays / 365)} years ago`;
   };
+
+  // Calculate average rating from actual reviews
+  const averageRating = reviews.length > 0 
+    ? (reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length).toFixed(1)
+    : "4.9";
 
   if (loading) {
     return (
@@ -146,9 +188,10 @@ const Reviews = () => {
               <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-6">
                 <p className="text-red-600 dark:text-red-400">{error}</p>
                 <button 
-                  onClick={() => window.location.reload()} 
-                  className="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                  onClick={handleRefresh} 
+                  className="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors flex items-center mx-auto"
                 >
+                  <RefreshCw className="h-4 w-4 mr-2" />
                   Try Again
                 </button>
               </div>
@@ -193,7 +236,7 @@ const Reviews = () => {
             <div className="flex justify-center items-center mb-4">
               {renderStars(5)}
             </div>
-            <h2 className="text-3xl font-bold mb-2">4.9 out of 5 stars</h2>
+            <h2 className="text-3xl font-bold mb-2">{averageRating} out of 5 stars</h2>
             <p className="text-white/90">Based on {reviews.length}+ verified reviews</p>
           </div>
 
@@ -201,7 +244,7 @@ const Reviews = () => {
           {reviews.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
               {reviews.map((review) => (
-                <div key={review.id} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:shadow-lg transition-shadow duration-300">
+                <div key={review._id} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:shadow-lg transition-shadow duration-300">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center">
                       <div className="w-10 h-10 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full flex items-center justify-center text-white font-bold">
@@ -212,7 +255,7 @@ const Reviews = () => {
                         <div className="text-sm text-gray-500 dark:text-gray-400">@{review.username.toLowerCase().replace(/\s+/g, '')}</div>
                       </div>
                     </div>
-                    {review.verified && (
+                    {review.isVerified && (
                       <span className="bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-400 text-xs px-2 py-1 rounded-full">
                         Verified
                       </span>
@@ -234,6 +277,18 @@ const Reviews = () => {
                     <span className="bg-purple-100 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 px-3 py-1 rounded-full text-sm font-medium">
                       {review.serviceUsed}
                     </span>
+                    <button
+                      onClick={() => handleVoteHelpful(review._id)}
+                      disabled={votingReviews.has(review._id)}
+                      className="flex items-center space-x-1 text-sm text-gray-500 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors disabled:opacity-50"
+                    >
+                      {votingReviews.has(review._id) ? (
+                        <Loader2 className="h-3 w-3 animate-spin" />
+                      ) : (
+                        <ThumbsUp className="h-3 w-3" />
+                      )}
+                      <span>{review.helpfulVotes || 0} helpful</span>
+                    </button>
                   </div>
                 </div>
               ))}
@@ -241,6 +296,13 @@ const Reviews = () => {
           ) : (
             <div className="text-center py-12">
               <p className="text-gray-600 dark:text-gray-300 text-lg">No reviews found.</p>
+              <button 
+                onClick={handleRefresh} 
+                className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors flex items-center mx-auto"
+              >
+                <RefreshCw className="h-4 w-4 mr-2" />
+                Refresh
+              </button>
             </div>
           )}
 

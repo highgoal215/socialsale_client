@@ -16,8 +16,11 @@ import BenefitsSection from '@/components/BenefitsSection';
 import ServiceHowItWorks from '@/components/ServiceHowItWorks';
 import ServiceTestimonials from '@/components/ServiceTestimonials';
 import { Shield, Clock, Users, Star, Zap, TrendingUp } from 'lucide-react';
+import SEOHead from '@/components/SEOHead';
+import { useSEO } from '@/hooks/useSEO';
 
 const Index = () => {
+  const { seoData } = useSEO();
 
   const mainBenefits = [
     {
@@ -90,36 +93,39 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950">
-      <Navbar />
-      <HeroSection />
-      <ProblemSolutionSection />
-      <FeatureHighlights />
-      <BenefitsSection
-        title="Why Choose Likes.IO?"
-        subtitle="Experience the benefits that make us the #1 choice for social media growth"
-        benefits={mainBenefits}
-      />
-      <HowItWorksSection />
-      <ServiceHowItWorks />
-      <ServicesSection />
-      <ServiceTestimonials
-        testimonials={mainTestimonials}
-        platform="Social Media"
-        title="What Our Customers Say"
-        subtitle="Join thousands of satisfied customers who have transformed their social media presence"
-      />
-      <UseCaseSection />
-      <RatingTrustSection />
-      <AboutSection />
-      <FAQSection
-        title="Frequently Asked Questions"
-        faqs={mainFAQs}
-      />
-      <BlogPreviewSection />
-      <ClosingCTASection />
-      <Footer />
-    </div>
+    <>
+      <SEOHead seoData={seoData} />
+      <div className="min-h-screen bg-white dark:bg-gray-950">
+        <Navbar />
+        <HeroSection />
+        <ProblemSolutionSection />
+        <FeatureHighlights />
+        <BenefitsSection
+          title="Why Choose Likes.IO?"
+          subtitle="Experience the benefits that make us the #1 choice for social media growth"
+          benefits={mainBenefits}
+        />
+        <HowItWorksSection />
+        <ServiceHowItWorks />
+        <ServicesSection />
+        <ServiceTestimonials
+          testimonials={mainTestimonials}
+          platform="Social Media"
+          title="What Our Customers Say"
+          subtitle="Join thousands of satisfied customers who have transformed their social media presence"
+        />
+        <UseCaseSection />
+        <RatingTrustSection />
+        <AboutSection />
+        <FAQSection
+          title="Frequently Asked Questions"
+          faqs={mainFAQs}
+        />
+        <BlogPreviewSection />
+        <ClosingCTASection />
+        <Footer />
+      </div>
+    </>
   );
 };
 

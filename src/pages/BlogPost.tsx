@@ -6,12 +6,17 @@ import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Calendar, User, ArrowLeft, Share2, Loader2 } from 'lucide-react';
 import { GetBlogPostById, type BlogPost } from '@/api/blog';
+import SEOHead from '@/components/SEOHead';
+import { useBlogSEO } from '@/hooks/useSEO';
 
 const BlogPost = () => {
   const { id } = useParams();
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Use dynamic SEO for blog post
+  const { seoData } = useBlogSEO(post);
 
   useEffect(() => {
     const fetchBlogPost = async () => {
@@ -80,127 +85,134 @@ const BlogPost = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white dark:bg-gray-950">
-        <Navbar />
-        <div className="pt-20 pb-16">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-purple-600" />
-            <p className="text-gray-600 dark:text-gray-300">Loading blog post...</p>
+      <>
+        <SEOHead seoData={seoData} />
+        <div className="min-h-screen bg-white dark:bg-gray-950">
+          <Navbar />
+          <div className="pt-20 pb-16">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+              <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-purple-600" />
+              <p className="text-gray-600 dark:text-gray-300">Loading blog post...</p>
+            </div>
           </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
+      </>
     );
   }
 
   if (error || !post) {
     return (
-      <div className="min-h-screen bg-white dark:bg-gray-950">
-        <Navbar />
-        <div className="pt-20 pb-16">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-8">
-              <h1 className="text-2xl font-bold text-red-800 dark:text-red-200 mb-4">
-                {error ? 'Error Loading Blog Post' : 'Post Not Found'}
-              </h1>
-              <p className="text-red-600 dark:text-red-300 mb-6">
-                {error || 'The blog post you are looking for does not exist.'}
-              </p>
-              <Link to="/blog">
-                <Button>Back to Blog</Button>
-              </Link>
+      <>
+        <SEOHead seoData={seoData} />
+        <div className="min-h-screen bg-white dark:bg-gray-950">
+          <Navbar />
+          <div className="pt-20 pb-16">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+              <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-8">
+                <h2 className="text-2xl font-bold text-red-800 dark:text-red-200 mb-4">
+                  Error Loading Blog Post
+                </h2>
+                <p className="text-red-600 dark:text-red-300 mb-6">{error || 'Blog post not found'}</p>
+                <Link to="/blog">
+                  <Button>Back to Blog</Button>
+                </Link>
+              </div>
             </div>
           </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
+      </>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950">
-      <Navbar />
-      
-      <div className="pt-20 pb-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Back Button */}
-          <Link to="/blog" className="inline-flex items-center text-purple-600 hover:text-purple-700 mb-8">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Blog
-          </Link>
+    <>
+      <SEOHead seoData={seoData} />
+      <div className="min-h-screen bg-white dark:bg-gray-950">
+        <Navbar />
+        
+        <div className="pt-20 pb-16">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Back Button */}
+            <Link to="/blog" className="inline-flex items-center text-purple-600 hover:text-purple-700 mb-8">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back to Blog
+            </Link>
 
-          {/* Hero Image */}
-          <img 
-            src={post.featuredImage || "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&h=400&fit=crop"} 
-            alt={post.title}
-            className="w-full h-96 object-cover rounded-xl mb-8"
-          />
+            {/* Hero Image */}
+            <img 
+              src={post.featuredImage || "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&h=400&fit=crop"} 
+              alt={post.title}
+              className="w-full h-96 object-cover rounded-xl mb-8"
+            />
 
-          {/* Article Header */}
-          <div className="mb-8">
-            <div className="flex items-center gap-4 mb-4">
-              <span className="inline-block bg-purple-100 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 px-3 py-1 rounded-full text-sm font-medium">
-                {post.categoryId || 'General'}
-              </span>
-              <span className="text-sm text-gray-500 dark:text-gray-400">
-                {calculateReadTime(post.content)}
-              </span>
+            {/* Article Header */}
+            <div className="mb-8">
+              <div className="flex items-center gap-4 mb-4">
+                <span className="inline-block bg-purple-100 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 px-3 py-1 rounded-full text-sm font-medium">
+                  {post.categoryId || 'General'}
+                </span>
+                <span className="text-sm text-gray-500 dark:text-gray-400">
+                  {calculateReadTime(post.content)}
+                </span>
+              </div>
+
+              <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                {post.title}
+              </h1>
+
+              <div className="flex items-center justify-between">
+                <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                  <User className="h-4 w-4 mr-1" />
+                  <span>{post.author}</span>
+                  <Calendar className="h-4 w-4 ml-3 mr-1" />
+                  <span>{formatDate(post.createdAt)}</span>
+                </div>
+                <Button variant="outline" size="sm" onClick={handleShare}>
+                  <Share2 className="h-4 w-4 mr-2" />
+                  Share
+                </Button>
+              </div>
             </div>
 
-            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              {post.title}
-            </h1>
+            {/* Article Content */}
+            <div 
+              className="prose prose-lg max-w-none dark:prose-invert"
+              dangerouslySetInnerHTML={{ __html: post.content }}
+            />
 
-            <div className="flex items-center justify-between">
-              <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
-                <User className="h-4 w-4 mr-1" />
-                <span>{post.author}</span>
-                <Calendar className="h-4 w-4 ml-3 mr-1" />
-                <span>{formatDate(post.createdAt)}</span>
+            {/* Tags */}
+            {post.tags && post.tags.length > 0 && (
+              <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Tags:</h3>
+                <div className="flex flex-wrap gap-2">
+                  {post.tags.map((tag, index) => (
+                    <span 
+                      key={index}
+                      className="inline-block bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full text-sm"
+                    >
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
               </div>
-              <Button variant="outline" size="sm" onClick={handleShare}>
-                <Share2 className="h-4 w-4 mr-2" />
-                Share
+            )}
+
+            {/* CTA Section */}
+            <div className="mt-12 p-8 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl text-white text-center">
+              <h3 className="text-2xl font-bold mb-4">Ready to Grow Your Social Media?</h3>
+              <p className="mb-6">Start boosting your followers, likes, and engagement today!</p>
+              <Button className="bg-white text-purple-600 hover:bg-gray-100">
+                Get Started Now
               </Button>
             </div>
           </div>
-
-          {/* Article Content */}
-          <div 
-            className="prose prose-lg max-w-none dark:prose-invert"
-            dangerouslySetInnerHTML={{ __html: post.content }}
-          />
-
-          {/* Tags */}
-          {post.tags && post.tags.length > 0 && (
-            <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Tags:</h3>
-              <div className="flex flex-wrap gap-2">
-                {post.tags.map((tag, index) => (
-                  <span 
-                    key={index}
-                    className="inline-block bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full text-sm"
-                  >
-                    #{tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* CTA Section */}
-          <div className="mt-12 p-8 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl text-white text-center">
-            <h3 className="text-2xl font-bold mb-4">Ready to Grow Your Social Media?</h3>
-            <p className="mb-6">Start boosting your followers, likes, and engagement today!</p>
-            <Button className="bg-white text-purple-600 hover:bg-gray-100">
-              Get Started Now
-            </Button>
-          </div>
         </div>
-      </div>
 
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </>
   );
 };
 

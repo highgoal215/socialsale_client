@@ -231,7 +231,7 @@ localStorage.setItem('debug', 'notifications');
 
 ### Environment Variables
 ```env
-VITE_BACKEND_URL=http://localhost:5000/api
+VITE_BACKEND_URL=http://localhost:5005/api
 ```
 
 ## Conclusion

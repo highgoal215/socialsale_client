@@ -37,7 +37,7 @@ const TikTokComments = () => {
     if (selectedPackage) {
       const pkg = packages.find(p => p.id === selectedPackage);
       if (pkg) {
-        navigate(`/checkout?service=TikTok Comments&package=${pkg.comments}&price=${pkg.price}`);
+        navigate(`/post-selection?service=TikTok Comments&package=${pkg.comments}&price=${pkg.price}`);
       }
     }
   };

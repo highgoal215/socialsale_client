@@ -2,170 +2,253 @@
 import React from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { Shield, Users, Zap, Target, Award, Clock } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Check, Users, Shield, Zap, Star, TrendingUp, Award, Globe } from 'lucide-react';
+import SEOHead from '@/components/SEOHead';
+import { useSEO } from '@/hooks/useSEO';
 
 const About = () => {
+  const { seoData } = useSEO();
+
   const stats = [
-    { number: "100K+", label: "Satisfied Customers" },
-    { number: "50M+", label: "Growth Delivered" },
-    { number: "99.9%", label: "Success Rate" },
-    { number: "24/7", label: "Customer Support" }
+    { icon: <Users className="h-8 w-8" />, number: "100K+", label: "Happy Customers" },
+    { icon: <Globe className="h-8 w-8" />, number: "50M+", label: "Services Delivered" },
+    { icon: <Star className="h-8 w-8" />, number: "4.9", label: "Average Rating" },
+    { icon: <Award className="h-8 w-8" />, number: "5+", label: "Years Experience" }
   ];
 
   const values = [
     {
-      icon: <Shield className="h-8 w-8" />,
-      title: "100% Safe & Secure",
-      description: "All our services comply with platform terms of service. Your account stays completely safe with our proven methods."
+      icon: <Shield className="h-6 w-6" />,
+      title: "Trust & Security",
+      description: "Your account safety is our top priority. We use only safe, compliant methods."
     },
     {
-      icon: <Users className="h-8 w-8" />,
-      title: "Real Active Users",
-      description: "All followers, likes, and engagement come from genuine, active social media accounts - no bots or fake profiles."
+      icon: <Zap className="h-6 w-6" />,
+      title: "Speed & Efficiency",
+      description: "Fast delivery and instant results. We value your time as much as you do."
     },
     {
-      icon: <Zap className="h-8 w-8" />,
-      title: "Instant Results",
-      description: "See growth within 24-48 hours. Our fast delivery system ensures you get results when you need them most."
+      icon: <Star className="h-6 w-6" />,
+      title: "Quality Service",
+      description: "We never compromise on quality. Every service meets our high standards."
     },
     {
-      icon: <Target className="h-8 w-8" />,
-      title: "Targeted Growth",
-      description: "We help you reach your specific audience and demographics for maximum engagement and conversion."
+      icon: <TrendingUp className="h-6 w-6" />,
+      title: "Continuous Growth",
+      description: "We're constantly improving our services and expanding our offerings."
+    }
+  ];
+
+  const team = [
+    {
+      name: "Alex Johnson",
+      role: "CEO & Founder",
+      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face",
+      bio: "Passionate about helping creators and businesses grow their social media presence."
     },
     {
-      icon: <Award className="h-8 w-8" />,
-      title: "Proven Results",
-      description: "Join over 100,000+ satisfied customers who have successfully grown their social media presence with us."
+      name: "Sarah Chen",
+      role: "Head of Operations",
+      image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=200&h=200&fit=crop&crop=face",
+      bio: "Ensuring every customer gets the best possible experience and results."
     },
     {
-      icon: <Clock className="h-8 w-8" />,
-      title: "24/7 Support",
-      description: "Our dedicated customer support team is available around the clock to help you with any questions or concerns."
+      name: "Mike Rodriguez",
+      role: "Technical Lead",
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face",
+      bio: "Building and maintaining the technology that powers our services."
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Navbar />
-      
-      <div className="pt-20">
+    <>
+      <SEOHead seoData={seoData} />
+      <div className="min-h-screen bg-white dark:bg-gray-950">
+        <Navbar />
+
         {/* Hero Section */}
-        <section className="py-16 bg-white dark:bg-gray-900">
+        <div className="pt-20 pb-16 bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-950/20 dark:to-blue-950/20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+            <div className="text-center">
+              <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
                 About Likes.IO
               </h1>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                We're the world's leading social media growth service, helping creators and businesses 
-                amplify their online presence with authentic, high-quality growth solutions.
+              <p className="text-xl lg:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-4xl mx-auto">
+                We're the leading social media growth platform, helping creators, influencers, and businesses 
+                build authentic online presence across Instagram, TikTok, and YouTube.
               </p>
             </div>
+          </div>
+        </div>
 
-            {/* Stats */}
-            <div className="grid md:grid-cols-4 gap-8 mb-16">
+        {/* Stats Section */}
+        <div className="py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {stats.map((stat, index) => (
                 <div key={index} className="text-center">
-                  <div className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent mb-2">
+                  <div className="flex justify-center mb-4 text-purple-600">
+                    {stat.icon}
+                  </div>
+                  <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
                     {stat.number}
                   </div>
-                  <div className="text-gray-600 dark:text-gray-300">{stat.label}</div>
+                  <div className="text-gray-600 dark:text-gray-400">
+                    {stat.label}
+                  </div>
                 </div>
               ))}
             </div>
           </div>
-        </section>
+        </div>
 
-        {/* Our Story */}
-        <section className="py-16 bg-gray-50 dark:bg-gray-800">
+        {/* Mission Section */}
+        <div className="py-16 bg-gray-50 dark:bg-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
                 <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-6">
-                  Our Story
+                  Our Mission
                 </h2>
                 <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
-                  Founded in 2020, Likes.IO was born from a simple observation: talented creators and businesses 
-                  were struggling to get the visibility they deserved on social media platforms.
+                  At Likes.IO, we believe that everyone deserves to have their voice heard and their content seen. 
+                  Our mission is to democratize social media growth by providing accessible, safe, and effective 
+                  services that help creators and businesses reach their full potential.
                 </p>
-                <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
-                  We started with a mission to democratize social media success by providing affordable, 
-                  effective, and safe growth services that deliver real results. Today, we've helped over 
-                  100,000 creators and businesses achieve their social media goals.
+                <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
+                  We're committed to maintaining the highest standards of quality, security, and customer service 
+                  while helping our clients build authentic, engaged audiences across all major social media platforms.
                 </p>
-                <p className="text-lg text-gray-600 dark:text-gray-300">
-                  Our commitment to quality, safety, and customer satisfaction has made us the most 
-                  trusted name in social media growth services worldwide.
-                </p>
+                <Button className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700">
+                  Get Started Today
+                </Button>
               </div>
-              <div className="bg-gradient-to-br from-purple-100 to-blue-100 dark:from-purple-900/20 dark:to-blue-900/20 rounded-2xl p-8">
-                <div className="text-center">
-                  <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full text-white mb-6">
-                    <Target className="h-12 w-12" />
+              <div className="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                  Why Choose Likes.IO?
+                </h3>
+                <div className="space-y-4">
+                  <div className="flex items-start">
+                    <Check className="h-5 w-5 text-green-500 mr-3 mt-0.5" />
+                    <div>
+                      <h4 className="font-semibold text-gray-900 dark:text-white">Proven Track Record</h4>
+                      <p className="text-gray-600 dark:text-gray-400">Over 100,000 satisfied customers worldwide</p>
+                    </div>
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-                    Our Mission
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300">
-                    To empower every creator and business with the tools and growth they need to succeed 
-                    in the digital world, making social media success accessible to everyone.
-                  </p>
+                  <div className="flex items-start">
+                    <Check className="h-5 w-5 text-green-500 mr-3 mt-0.5" />
+                    <div>
+                      <h4 className="font-semibold text-gray-900 dark:text-white">Safe & Secure</h4>
+                      <p className="text-gray-600 dark:text-gray-400">Your account safety is our top priority</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start">
+                    <Check className="h-5 w-5 text-green-500 mr-3 mt-0.5" />
+                    <div>
+                      <h4 className="font-semibold text-gray-900 dark:text-white">24/7 Support</h4>
+                      <p className="text-gray-600 dark:text-gray-400">Round-the-clock customer support</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start">
+                    <Check className="h-5 w-5 text-green-500 mr-3 mt-0.5" />
+                    <div>
+                      <h4 className="font-semibold text-gray-900 dark:text-white">Money-Back Guarantee</h4>
+                      <p className="text-gray-600 dark:text-gray-400">30-day guarantee on all services</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </section>
+        </div>
 
-        {/* Values */}
-        <section className="py-16 bg-white dark:bg-gray-900">
+        {/* Values Section */}
+        <div className="py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-                Why Choose Likes.IO?
+                Our Values
               </h2>
               <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                We're committed to providing the highest quality social media growth services 
-                with complete safety and reliability.
+                The principles that guide everything we do
               </p>
             </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               {values.map((value, index) => (
-                <div key={index} className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 hover:shadow-lg transition-shadow duration-300">
-                  <div className="text-purple-600 dark:text-purple-400 mb-4">
-                    {value.icon}
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                    {value.title}
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300">
-                    {value.description}
-                  </p>
-                </div>
+                <Card key={index} className="text-center hover:shadow-lg transition-shadow">
+                  <CardHeader>
+                    <div className="flex justify-center mb-4 text-purple-600">
+                      {value.icon}
+                    </div>
+                    <CardTitle className="text-xl">{value.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-600 dark:text-gray-400">
+                      {value.description}
+                    </p>
+                  </CardContent>
+                </Card>
               ))}
             </div>
           </div>
-        </section>
+        </div>
+
+        {/* Team Section */}
+        <div className="py-16 bg-gray-50 dark:bg-gray-900">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                Meet Our Team
+              </h2>
+              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                The passionate people behind Likes.IO
+              </p>
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {team.map((member, index) => (
+                <Card key={index} className="text-center hover:shadow-lg transition-shadow">
+                  <CardHeader>
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
+                    />
+                    <CardTitle className="text-xl">{member.name}</CardTitle>
+                    <p className="text-purple-600 font-medium">{member.role}</p>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-600 dark:text-gray-400">
+                      {member.bio}
+                    </p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </div>
 
         {/* CTA Section */}
-        <section className="py-16 bg-gradient-to-r from-purple-600 to-blue-600">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-              Ready to Grow Your Social Media?
-            </h2>
-            <p className="text-xl text-purple-100 mb-8">
-              Join thousands of satisfied customers who have transformed their social media presence with Likes.IO.
-            </p>
-            <button className="bg-white text-purple-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300">
-              Start Your Growth Journey
-            </button>
+        <div className="py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl p-12 text-center text-white">
+              <h2 className="text-3xl lg:text-4xl font-bold mb-6">
+                Ready to Grow Your Social Media?
+              </h2>
+              <p className="text-xl mb-8 opacity-90">
+                Join thousands of satisfied customers who have transformed their social media presence with Likes.IO
+              </p>
+              <Button size="lg" className="bg-white text-purple-600 hover:bg-gray-100">
+                Get Started Now
+              </Button>
+            </div>
           </div>
-        </section>
-      </div>
+        </div>
 
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </>
   );
 };
 

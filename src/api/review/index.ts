@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const Backend_URL = import.meta.env.BACKEND_URL || 'http://localhost:5000/api';
+const Backend_URL = import.meta.env.BACKEND_URL || 'http://localhost:5005/api';
 
 interface ReviewFormData {
     name: string;
@@ -87,6 +87,73 @@ export const GetAllReviews = async () => {
             return {
                 success: false,
                 message: 'An error occurred while fetching reviews'
+            };
+        }
+    }
+}
+
+// Vote for helpful review
+export const VoteHelpful = async (reviewId: string) => {
+    try {
+        const response = await axios.put(`${Backend_URL}/leavereview/${reviewId}/helpful`);
+        
+        return response.data;
+    } catch (error: any) {
+        console.error("Vote Helpful Error:", error);
+        
+        if (error.response) {
+            console.error("Error response data:", error.response.data);
+            console.error("Error response status:", error.response.status);
+            
+            const errorMessage = error.response.data?.message || 
+                               error.response.data?.error || 
+                               'Failed to vote for review';
+            
+            return {
+                success: false,
+                message: errorMessage
+            };
+        } else if (error.request) {
+            return {
+                success: false,
+                message: 'Network error. Please check your connection.'
+            };
+        } else {
+            return {
+                success: false,
+                message: 'An error occurred while voting for the review'
+            };
+        }
+    }
+}
+
+// Get review statistics (for admin use)
+export const GetReviewStats = async () => {
+    try {
+        const response = await axios.get(`${Backend_URL}/leavereview/stats`);
+        
+        return response.data;
+    } catch (error: any) {
+        console.error("Get Review Stats Error:", error);
+        
+        if (error.response) {
+            const errorMessage = error.response.data?.message || 
+                               error.response.data?.error || 
+                               'Failed to fetch review statistics';
+            
+            return {
+                success: false,
+                message: errorMessage
+            };
+        } else if (error.request) {
+            return {
+                success: false,
+                message: 'Network error. Please check your connection.'
+            };
+        } else {
+            return {
+                success: false,
+                message: 'An error occurred while fetching review statistics'
             };
         }
     }

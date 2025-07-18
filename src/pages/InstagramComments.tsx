@@ -37,7 +37,7 @@ const InstagramComments = () => {
     if (selectedPackage) {
       const pkg = packages.find(p => p.id === selectedPackage);
       if (pkg) {
-        navigate(`/checkout?service=Instagram Comments&package=${pkg.comments}&price=${pkg.price}`);
+        navigate(`/post-selection?service=Instagram Comments&package=${pkg.comments}&price=${pkg.price}`);
       }
     }
   };

@@ -38,7 +38,7 @@ const YouTubeSubscribes = () => {
     if (selectedPackage) {
       const pkg = packages.find(p => p.id === selectedPackage);
       if (pkg) {
-        navigate(`/checkout?service=YouTube Subscribers&package=${pkg.subscribers}&price=${pkg.price}`);
+        navigate(`/post-selection?service=YouTube Subscribers&package=${pkg.subscribers}&price=${pkg.price}`);
       }
     }
   };

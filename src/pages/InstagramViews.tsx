@@ -42,7 +42,7 @@ const InstagramViews = () => {
         package: selectedPkg.views,
         price: `$${selectedPkg.price}`
       });
-      navigate(`/checkout?${params.toString()}`);
+      navigate(`/post-selection?${params.toString()}`);
     }
   };
 
