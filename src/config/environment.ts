@@ -1,7 +1,7 @@
 // Environment configuration
 export const config = {
   // Backend API URL
-  backendUrl: import.meta.env.VITE_BACKEND_URL || 'http://localhost:5005',
+  backendUrl: import.meta.env.VITE_BACKEND_URL || 'https://api.likes.io',
   
   // Environment
   nodeEnv: import.meta.env.VITE_NODE_ENV || 'development',

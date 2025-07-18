@@ -33,10 +33,10 @@ const defaultSEO: SEOData = {
   keywords: 'Instagram followers, TikTok views, YouTube subscribers, social media growth, buy followers, increase engagement, social media marketing',
   ogTitle: 'Likes.IO - #1 Social Media Growth Service | Real Followers & Subscribers',
   ogDescription: 'Grow your Instagram, TikTok & YouTube with real followers, subscribers, likes & views. Trusted by 100K+ creators. Safe, affordable & instant results.',
-  ogImage: 'http://localhost:5005/og-image.png',
-  // ogImage: 'http://localhost:5005/og-image.png',
-  canonicalUrl: 'http://localhost:5005', // Update with your production URL
-  // canonicalUrl: 'http://localhost:5005',
+  ogImage: 'https://api.likes.io/og-image.png',
+  // ogImage: 'https://api.likes.io/og-image.png',
+  canonicalUrl: 'https://api.likes.io', // Update with your production URL
+  // canonicalUrl: 'https://api.likes.io',
 };
 
 export const useSEO = (customPageId?: string) => {
@@ -112,8 +112,8 @@ export const useBlogSEO = (blogPost?: { title: string; excerpt?: string; content
         keywords: blogPost.tags?.join(', ') || 'social media growth, Instagram, TikTok, YouTube',
         ogTitle: blogPost.title,
         ogDescription: blogPost.excerpt || blogPost.content.substring(0, 150) + '...',
-        ogImage: 'http://localhost:5005/blog-og.jpg',
-        canonicalUrl: `http://localhost:5005/blog/${blogPost.title.toLowerCase().replace(/\s+/g, '-')}`,
+        ogImage: 'https://api.likes.io/blog-og.jpg',
+        canonicalUrl: `https://api.likes.io/blog/${blogPost.title.toLowerCase().replace(/\s+/g, '-')}`,
         structuredData: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "BlogPosting",
@@ -130,12 +130,12 @@ export const useBlogSEO = (blogPost?: { title: string; excerpt?: string; content
             "name": "Likes.IO",
             "logo": {
               "@type": "ImageObject",
-              "url": "http://localhost:5005/logo.png"
+              "url": "https://api.likes.io/logo.png"
             }
           },
           "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": `http://localhost:5005/blog/${blogPost.title.toLowerCase().replace(/\s+/g, '-')}`
+            "@id": `https://api.likes.io/blog/${blogPost.title.toLowerCase().replace(/\s+/g, '-')}`
           }
         })
       };

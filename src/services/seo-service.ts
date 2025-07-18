@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const Backend_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5005/api';
+const Backend_URL = import.meta.env.VITE_BACKEND_URL || 'https://api.likes.io/api';
 
 export interface SEOSetting {
   _id: string;
