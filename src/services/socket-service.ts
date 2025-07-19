@@ -21,7 +21,7 @@ class SocketService {
     }
 
     if (config.enableWebSocketDebug) {
-      console.log('🔌 Initializing socket connection to:', config.backendUrl);
+      // //console.log('🔌 Initializing socket connection to:', config.backendUrl);
     }
 
     this.socket = io(config.backendUrl, {
@@ -43,7 +43,7 @@ class SocketService {
 
     this.socket.on('connect', () => {
       if (config.enableWebSocketDebug) {
-        console.log('🔌 Socket connected successfully:', this.socket?.id);
+        // //console.log('🔌 Socket connected successfully:', this.socket?.id);
       }
       this.isConnected = true;
       this.reconnectAttempts = 0;
@@ -52,7 +52,7 @@ class SocketService {
 
     this.socket.on('disconnect', (reason) => {
       if (config.enableWebSocketDebug) {
-        console.log('🔌 Socket disconnected:', reason);
+        // //console.log('🔌 Socket disconnected:', reason);
       }
       this.isConnected = false;
       this.disconnectListeners.forEach(listener => listener());
@@ -71,7 +71,7 @@ class SocketService {
 
     this.socket.on('reconnect', (attemptNumber) => {
       if (config.enableWebSocketDebug) {
-        console.log('🔌 Socket reconnected after', attemptNumber, 'attempts');
+        // //console.log('🔌 Socket reconnected after', attemptNumber, 'attempts');
       }
       this.isConnected = true;
       this.reconnectAttempts = 0;
@@ -91,7 +91,7 @@ class SocketService {
     // Listen for new notifications
     this.socket.on('new_notification', (notification) => {
       if (config.enableWebSocketDebug) {
-        console.log('🔌 Received new notification:', notification);
+        // //console.log('🔌 Received new notification:', notification);
       }
       this.newNotificationListeners.forEach(listener => listener(notification));
     });
@@ -106,14 +106,14 @@ class SocketService {
   public connect() {
     if (!config.socketEnabled) {
       if (config.enableWebSocketDebug) {
-        console.log('🔌 Socket connection disabled by configuration');
+        // //console.log('🔌 Socket connection disabled by configuration');
       }
       return;
     }
 
     try {
       if (config.enableWebSocketDebug) {
-        console.log('🔌 Attempting to connect to socket server...');
+        // //console.log('🔌 Attempting to connect to socket server...');
       }
       this.initializeSocket();
       if (this.socket && !this.isConnected) {
@@ -139,7 +139,7 @@ class SocketService {
     if (!this.socket) return;
     
     if (config.enableWebSocketDebug) {
-      console.log('🔌 Trying fallback transport (polling)');
+      // //console.log('🔌 Trying fallback transport (polling)');
     }
     this.socket.io.opts.transports = ['polling'];
     this.socket.connect();
@@ -148,7 +148,7 @@ class SocketService {
   public disconnect() {
     if (this.socket) {
       if (config.enableWebSocketDebug) {
-        console.log('🔌 Disconnecting socket');
+        // //console.log('🔌 Disconnecting socket');
       }
       this.socket.disconnect();
       this.socket = null;
@@ -159,7 +159,7 @@ class SocketService {
   public joinUserRoom(userId: string) {
     if (this.socket && this.isConnected) {
       if (config.enableWebSocketDebug) {
-        console.log('🔌 Joining user room:', userId);
+        // //console.log('🔌 Joining user room:', userId);
       }
       this.socket.emit('join-user', userId);
     } else {
@@ -172,7 +172,7 @@ class SocketService {
   public leaveUserRoom(userId: string) {
     if (this.socket && this.isConnected) {
       if (config.enableWebSocketDebug) {
-        console.log('🔌 Leaving user room:', userId);
+        // //console.log('🔌 Leaving user room:', userId);
       }
       this.socket.emit('leave-user', userId);
     }

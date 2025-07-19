@@ -23,7 +23,7 @@
 // Socket.IO CORS
 cors: {
   origin: [
-    "https://likes.io", 
+    "http://localhost:5005", 
     "https://www.likes.io", 
     "http://localhost:9000",  // Client port
     "http://localhost:4000", 
@@ -80,7 +80,7 @@ transports: ['websocket', 'polling']
 
 ```javascript
 export const config = {
-  backendUrl: import.meta.env.VITE_BACKEND_URL || 'https://api.likes.io',
+  backendUrl: import.meta.env.VITE_BACKEND_URL || 'http://localhost:5005',
   socketEnabled: import.meta.env.VITE_SOCKET_ENABLED !== 'false',
   socketTimeout: parseInt(import.meta.env.VITE_SOCKET_TIMEOUT || '10000'),
   enableWebSocketDebug: import.meta.env.VITE_ENABLE_WEBSOCKET_DEBUG === 'true',
@@ -130,7 +130,7 @@ Create a `.env` file in `socialsale_client/`:
 
 ```bash
 # Backend API URL
-VITE_BACKEND_URL=https://api.likes.io
+VITE_BACKEND_URL=http://localhost:5005
 
 # Socket Configuration
 VITE_SOCKET_ENABLED=true
@@ -146,7 +146,7 @@ VITE_ENABLE_WEBSOCKET_DEBUG=true
 
 ### 1. Verify Backend Health
 ```bash
-curl https://api.likes.io/api/health
+curl http://localhost:5005/api/health
 ```
 
 ### 2. Test WebSocket Connection

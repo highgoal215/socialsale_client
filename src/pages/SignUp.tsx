@@ -46,7 +46,7 @@ const SignUp = () => {
   const handleGoogleLogin = () => {
     try {
       // Check if client ID is configured
-      const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+      const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || "426616564683-v2fo1auqtgnfe9mh8pmqhm1qghfcgagn.apps.googleusercontent.com";
       if (!clientId) {
         console.error('Google Client ID not configured');
         toast({
@@ -56,18 +56,18 @@ const SignUp = () => {
         });
         return;
       }
-      
+
       // Build the Google OAuth URL for popup flow
       const redirectUri = `${window.location.origin}/google-callback`;
       const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=token&scope=email profile&state=${encodeURIComponent(window.location.pathname)}`;
-      
+
       // Open popup with specific dimensions and features
       const popup = window.open(
         googleAuthUrl,
         'googleAuth',
         'width=500,height=600,scrollbars=yes,resizable=yes,status=yes,location=yes,toolbar=no,menubar=no,centerscreen=yes'
       );
-      
+
       if (!popup) {
         toast({
           title: "Error",
@@ -83,19 +83,19 @@ const SignUp = () => {
         if (event.origin !== window.location.origin) {
           return;
         }
-        
+
         if (event.data.type === 'GOOGLE_OAUTH_SUCCESS') {
           window.removeEventListener('message', handleMessage);
-          
+
           try {
             const result = await googleLogin(event.data.accessToken);
-            
+
             if (result.success) {
               toast({
                 title: "Success!",
                 description: result.message,
               });
-              
+
               // Navigate to dashboard after successful login
               navigate('/profile');
             } else {
@@ -136,7 +136,7 @@ const SignUp = () => {
           console.warn('Could not close popup:', e);
         }
       }, 300000); // 5 minutes timeout
-      
+
     } catch (error) {
       console.error('Google login error:', error);
       toast({
@@ -310,8 +310,8 @@ const SignUp = () => {
             </div>
 
             <div className="mt-6 grid w-full  gap-3">
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="w-full border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700"
                 onClick={handleGoogleLogin}
               >

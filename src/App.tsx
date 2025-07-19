@@ -98,7 +98,8 @@ const App = () => (
                 <Route path="/terms" element={<Terms />} />
                 <Route path="/tracking" element={<Tracking />} />
                 <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
-                <Route path="/auth/google/callback" element={<GoogleCallback />} />
+                {/* <Route path="/auth/google/callback" element={<GoogleCallback />} /> */}
+                <Route path="/google-callback" element={<GoogleCallback />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
               <LiveChat />

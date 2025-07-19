@@ -31,7 +31,8 @@ const InstagramViews = () => {
     price: service.price,
     popular: service.popular || false,
     description: service.description,
-    features: service.features || []
+    features: service.features || [],
+    quality: service.quality || 'general' // Include quality from backend service
   }));
 
   const handleOrderClick = () => {
@@ -40,7 +41,8 @@ const InstagramViews = () => {
       const params = new URLSearchParams({
         service: 'Instagram Views',
         package: selectedPkg.views,
-        price: `$${selectedPkg.price}`
+        price: `$${selectedPkg.price}`,
+        quality: selectedPkg.quality || 'general' // Include quality from service data
       });
       navigate(`/post-selection?${params.toString()}`);
     }

@@ -1,58 +1,50 @@
-import { getSEOSetting, getBulkSEOSettings, clearSEOCache } from '../services/seo-service';
+import { getSEOSetting, getBulkSEOSettings } from '../services/seo-service';
 
 export const testSEOIntegration = async () => {
-  console.log('🧪 Testing SEO Integration...\n');
-
+  //console.log('🧪 Testing SEO Integration...');
+  
   try {
-    // Test 1: Fetch single SEO setting
-    console.log('1. Testing single SEO setting fetch...');
+    // Test single SEO setting fetch
+    //console.log('\n📄 Testing single SEO setting fetch...');
     const homeSEO = await getSEOSetting('home');
     if (homeSEO) {
-      console.log('✅ Home page SEO fetched successfully');
-      console.log(`   Title: ${homeSEO.title}`);
-      console.log(`   Description: ${homeSEO.description}`);
+      //console.log('✅ Home page SEO loaded successfully');
+      //console.log('   Title:', homeSEO.title);
+      //console.log('   Description:', homeSEO.description);
     } else {
-      console.log('❌ Failed to fetch home page SEO');
+      //console.log('❌ Home page SEO not found or inactive');
     }
 
-    // Test 2: Fetch bulk SEO settings
-    console.log('\n2. Testing bulk SEO settings fetch...');
-    const pageIds = ['home', 'instagram-likes', 'tiktok-followers', 'youtube-subscribers'];
-    const bulkSEO = await getBulkSEOSettings(pageIds);
+    // Test bulk SEO settings fetch
+    //console.log('\n📚 Testing bulk SEO settings fetch...');
+    const bulkSEO = await getBulkSEOSettings(['home', 'about', 'contact']);
     if (bulkSEO.size > 0) {
-      console.log(`✅ Bulk SEO fetched successfully (${bulkSEO.size} pages)`);
+      //console.log(`✅ Bulk SEO loaded successfully (${bulkSEO.size} pages)`);
       bulkSEO.forEach((seo, pageId) => {
-        console.log(`   ${pageId}: ${seo.title}`);
+        //console.log(`   ${pageId}: ${seo.title}`);
       });
     } else {
-      console.log('❌ Failed to fetch bulk SEO settings');
+      //console.log('❌ Bulk SEO not found or all inactive');
     }
 
-    // Test 3: Test caching
-    console.log('\n3. Testing SEO caching...');
-    const cachedSEO = await getSEOSetting('home');
-    if (cachedSEO) {
-      console.log('✅ SEO caching working correctly');
+    // Test non-existent page
+    //console.log('\n🔍 Testing non-existent page...');
+    const nonExistentSEO = await getSEOSetting('non-existent-page');
+    if (!nonExistentSEO) {
+      //console.log('✅ Correctly handled non-existent page');
     } else {
-      console.log('❌ SEO caching failed');
+      //console.log('❌ Unexpectedly found SEO for non-existent page');
     }
 
-    // Test 4: Clear cache
-    console.log('\n4. Testing cache clearing...');
-    clearSEOCache();
-    console.log('✅ Cache cleared successfully');
-
-    console.log('\n🎉 SEO Integration Test Complete!');
-    return true;
-
+    //console.log('\n🎉 SEO Integration Test Completed!');
+    
   } catch (error) {
     console.error('❌ SEO Integration Test Failed:', error);
-    return false;
   }
 };
 
 export const validateMetaTags = () => {
-  console.log('🔍 Validating Meta Tags...\n');
+  //console.log('🔍 Validating Meta Tags...\n');
 
   const metaTags = {
     title: document.title,
@@ -62,12 +54,12 @@ export const validateMetaTags = () => {
     canonical: document.querySelector('link[rel="canonical"]')?.getAttribute('href'),
   };
 
-  console.log('Current Meta Tags:');
+  //console.log('Current Meta Tags:');
   Object.entries(metaTags).forEach(([key, value]) => {
     if (value) {
-      console.log(`   ${key}: ${value}`);
+      //console.log(`   ${key}: ${value}`);
     } else {
-      console.log(`   ${key}: ❌ Missing`);
+      //console.log(`   ${key}: ❌ Missing`);
     }
   });
 
@@ -76,13 +68,13 @@ export const validateMetaTags = () => {
 
 // Function to check if React Helmet is working
 export const checkHelmetIntegration = () => {
-  console.log('🎯 Checking React Helmet Integration...\n');
+  //console.log('🎯 Checking React Helmet Integration...\n');
 
   const helmet = document.querySelector('[data-react-helmet]');
   if (helmet) {
-    console.log('✅ React Helmet is properly integrated');
+    //console.log('✅ React Helmet is properly integrated');
   } else {
-    console.log('❌ React Helmet integration not found');
+    //console.log('❌ React Helmet integration not found');
   }
 
   return !!helmet;

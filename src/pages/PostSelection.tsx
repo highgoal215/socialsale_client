@@ -32,6 +32,7 @@ const PostSelection = () => {
   const service = searchParams.get('service') || 'Instagram Views';
   const packageAmount = searchParams.get('package') || '5';
   const price = searchParams.get('price') || '$6.99';
+  const quality = searchParams.get('quality') || 'general'; // Get quality from URL params
 
   // Determine platform and service type
   const platform = service.includes('Instagram') ? 'instagram' : 
@@ -123,6 +124,7 @@ const PostSelection = () => {
       service,
       package: packageAmount,
       price,
+      quality, // Pass quality to checkout
       postUrl: selectedData.url,
       postType: selectedData.type,
       platform: selectedData.platform,

@@ -31,14 +31,16 @@ const TikTokFollowers = () => {
     price: `$${service.price}`,
     popular: service.popular || false,
     description: service.description,
-    features: service.features || []
+    features: service.features || [],
+    quality: service.quality,
+    type: service.type 
   }));
 
   const handleOrderClick = () => {
     if (selectedPackage) {
       const pkg = packages.find(p => p.id === selectedPackage);
       if (pkg) {
-        navigate(`/post-selection?service=TikTok Followers&package=${pkg.followers}&price=${pkg.price}`);
+        navigate(`/post-selection?service=TikTok Followers&package=${pkg.followers}&price=${pkg.price}&quality=${pkg.quality}`);
       }
     }
   };

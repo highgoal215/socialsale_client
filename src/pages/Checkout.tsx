@@ -28,6 +28,7 @@ const Checkout = () => {
   const service = searchParams.get('service') || 'Instagram Views';
   const packageAmount = searchParams.get('package') || '5K';
   const price = searchParams.get('price') || '$6.99';
+  const quality = searchParams.get('quality') || 'general'; // Get quality from URL params
 
   useEffect(() => {
     if (service && packageAmount) {
@@ -40,6 +41,11 @@ const Checkout = () => {
       ...formData,
       [e.target.name]: e.target.value
     });
+  };
+
+  // Function to get service quality from URL params or default to general
+  const getServiceQuality = (): 'general' | 'premium' => {
+    return (quality === 'premium' || quality === 'general') ? quality as 'general' | 'premium' : 'general';
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -90,8 +96,6 @@ const Checkout = () => {
         return serviceMap[serviceName] || 'followers';
       };
 
-
-      
       // Parse quantity from package amount (e.g., "5K" -> 5000)
       const parseQuantity = (packageAmount: string): number => {
         const num = packageAmount.replace(/[^\d.]/g, '');
@@ -103,13 +107,16 @@ const Checkout = () => {
         return parseInt(num);
       };
 
+      // Get service quality from URL params
+      const serviceQuality = getServiceQuality();
+
       // Prepare payment data
       const paymentData = {
         socialUsername: formData.username,
         email: formData.email,
         paymentMethod: paymentMethod as 'card' | 'paypal' | 'crypto',
         serviceType: mapServiceType(service),
-        quality: 'general' as 'general' | 'premium', // Default to general, can be enhanced later
+        quality: serviceQuality, // Use dynamically determined quality
         quantity: parseQuantity(packageAmount),
         postUrl: formData.postUrl,
         // Card payment details
@@ -125,7 +132,6 @@ const Checkout = () => {
         })
       };
 
- 
       const result = await ProcessSocialOrderPayment(paymentData);
       
       if (result.success) {

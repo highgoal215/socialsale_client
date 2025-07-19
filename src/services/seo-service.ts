@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const Backend_URL = import.meta.env.VITE_BACKEND_URL || 'https://api.likes.io/api';
+const Backend_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5005/api';
 
 export interface SEOSetting {
   _id: string;
@@ -51,6 +51,7 @@ export const getSEOSetting = async (pageId: string): Promise<SEOData | null> => 
     }
 
     // Fetch from API
+    // //console.log('Fetching SEO settings for pageId:', pageId);
     const response = await axios.get(`${Backend_URL}/seo-settings/${pageId}`);
     
     if (response.data.success && response.data.data) {
@@ -60,6 +61,7 @@ export const getSEOSetting = async (pageId: string): Promise<SEOData | null> => 
       seoCache.set(pageId, seoSetting);
       
       if (seoSetting.isActive) {
+        // //console.log('SEO settings found and active for:', pageId);
         return {
           title: seoSetting.title,
           description: seoSetting.description,
@@ -70,12 +72,19 @@ export const getSEOSetting = async (pageId: string): Promise<SEOData | null> => 
           canonicalUrl: seoSetting.canonicalUrl,
           structuredData: seoSetting.structuredData
         };
+      } else {
+        // //console.log('SEO settings found but inactive for:', pageId);
+        return null;
       }
     }
     
     return null;
-  } catch (error) {
-    console.error('Error fetching SEO settings:', error);
+  } catch (error: any) {
+    if (error.response?.status === 404) {
+      // //console.log(`SEO settings not found for pageId: ${pageId} (404)`);
+    } else {
+      console.error('Error fetching SEO settings for pageId:', pageId, error);
+    }
     return null;
   }
 };

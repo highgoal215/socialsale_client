@@ -33,14 +33,15 @@ const InstagramLikes = () => {
     price: `$${service.price}`,
     popular: service.popular || false,
     description: service.description,
-    features: service.features || []
+    features: service.features || [],
+    quality: service.quality || 'general' // Include quality from backend service
   }));
 
   const handleOrderClick = () => {
     if (selectedPackage) {
       const pkg = packages.find(p => p.id === selectedPackage);
       if (pkg) {
-        navigate(`/post-selection?service=Instagram Likes&package=${pkg.likes}&price=${pkg.price}`);
+        navigate(`/post-selection?service=Instagram Likes&package=${pkg.likes}&price=${pkg.price}&quality=${pkg.quality}`);
       }
     }
   };

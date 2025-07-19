@@ -61,8 +61,8 @@ const SEOHead: React.FC<SEOHeadProps> = ({ seoData, children }) => {
           "@type": "Organization",
           "name": "Likes.IO",
           "description": "Leading social media growth service for Instagram, TikTok, and YouTube",
-          "url": "https://likes.io",
-          "logo": "https://likes.io/logo.png",
+          "url": "http://localhost:5005",
+          "logo": "http://localhost:5005/logo.png",
           "contactPoint": {
             "@type": "ContactPoint",
             "telephone": "+1-555-0123",

@@ -33,8 +33,10 @@ const defaultSEO: SEOData = {
   keywords: 'Instagram followers, TikTok views, YouTube subscribers, social media growth, buy followers, increase engagement, social media marketing',
   ogTitle: 'Likes.IO - #1 Social Media Growth Service | Real Followers & Subscribers',
   ogDescription: 'Grow your Instagram, TikTok & YouTube with real followers, subscribers, likes & views. Trusted by 100K+ creators. Safe, affordable & instant results.',
-  ogImage: 'https://likes.io/og-image.png',
-  canonicalUrl: 'https://likes.io',
+  ogImage: 'http://localhost:5005/og-image.png',
+  // ogImage: 'http://localhost:5005/og-image.png',
+  canonicalUrl: 'http://localhost:5005', // Update with your production URL
+  // canonicalUrl: 'http://localhost:5005',
 };
 
 export const useSEO = (customPageId?: string) => {
@@ -54,14 +56,18 @@ export const useSEO = (customPageId?: string) => {
 
       if (!pageId) {
         // Use default SEO for unknown routes
+        // //console.log('No pageId found for route:', location.pathname, '- using default SEO');
         setSeoData(defaultSEO);
         setIsLoading(false);
         return;
       }
 
+      // //console.log('Updating SEO for pageId:', pageId, 'route:', location.pathname);
+
       // Check cache first
       const cachedData = getCachedSEOSetting(pageId);
       if (cachedData) {
+        // //console.log('Using cached SEO data for:', pageId);
         setSeoData(cachedData);
         setIsLoading(false);
         return;
@@ -71,13 +77,15 @@ export const useSEO = (customPageId?: string) => {
       try {
         const data = await getSEOSetting(pageId);
         if (data) {
+          // //console.log('Successfully loaded SEO data for:', pageId);
           setSeoData(data);
         } else {
           // Fallback to default SEO if no data found
+          // //console.log('No SEO data found for:', pageId, '- using default SEO');
           setSeoData(defaultSEO);
         }
       } catch (error) {
-        console.error('Error fetching SEO data:', error);
+        console.error('Error fetching SEO data for pageId:', pageId, error);
         setSeoData(defaultSEO);
       } finally {
         setIsLoading(false);
@@ -104,8 +112,8 @@ export const useBlogSEO = (blogPost?: { title: string; excerpt?: string; content
         keywords: blogPost.tags?.join(', ') || 'social media growth, Instagram, TikTok, YouTube',
         ogTitle: blogPost.title,
         ogDescription: blogPost.excerpt || blogPost.content.substring(0, 150) + '...',
-        ogImage: 'https://likes.io/blog-og.jpg',
-        canonicalUrl: `https://likes.io/blog/${blogPost.title.toLowerCase().replace(/\s+/g, '-')}`,
+        ogImage: 'http://localhost:5005/blog-og.jpg',
+        canonicalUrl: `http://localhost:5005/blog/${blogPost.title.toLowerCase().replace(/\s+/g, '-')}`,
         structuredData: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "BlogPosting",
@@ -122,12 +130,12 @@ export const useBlogSEO = (blogPost?: { title: string; excerpt?: string; content
             "name": "Likes.IO",
             "logo": {
               "@type": "ImageObject",
-              "url": "https://likes.io/logo.png"
+              "url": "http://localhost:5005/logo.png"
             }
           },
           "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": `https://likes.io/blog/${blogPost.title.toLowerCase().replace(/\s+/g, '-')}`
+            "@id": `http://localhost:5005/blog/${blogPost.title.toLowerCase().replace(/\s+/g, '-')}`
           }
         })
       };
